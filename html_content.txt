@@ -1,0 +1,260 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+            body {
+                font-family: 'Inter', 'Helvetica', 'Arial', sans-serif;
+                font-size: 14px;
+                color: #333;
+                margin: 0;
+                line-height: 1.5;
+                background-color: #fff;
+            }
+            .header-container {
+                border-bottom: 4px solid #1a5276;
+                margin-bottom: 20px;
+                padding-bottom: 15px;
+            }
+            .main-header-center {
+                text-align: center;
+                color: #1a5276;
+                font-size: 28px;
+                font-weight: 700;
+                margin-bottom: 15px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+            .clinic-header-sub {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .header-left {
+                display: flex;
+                align-items: center;
+            }
+            .app-logo {
+                height: 60px;
+            }
+            .clinic-info-right {
+                text-align: right;
+                font-size: 13px;
+                color: #333;
+                line-height: 1.4;
+            }
+            .label-bold { font-weight: 700; }
+            .info-container {
+                padding: 5px 0;
+                margin-bottom: 20px;
+            }
+            .info-table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            .info-table td {
+                padding: 4px 0;
+                vertical-align: top;
+            }
+            .field-label { font-weight: 700; width: 140px; color: #1a5276; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+            .value { color: #000; font-weight: 400; font-size: 14px; }
+            .invoice-title-container {
+                text-align: center;
+                margin: 10px 0 20px 0;
+            }
+            .invoice-title {
+                display: inline-block;
+                text-transform: uppercase;
+                font-weight: 700;
+                font-size: 20px;
+                padding: 5px 30px;
+                border-bottom: 2px solid #1a5276;
+                color: #1a5276;
+                letter-spacing: 2px;
+            }
+            .data-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 10px;
+            }
+            .data-table th {
+                background-color: #f4f7f9;
+                color: #1a5276;
+                padding: 10px;
+                text-align: left;
+                font-weight: 700;
+                text-transform: uppercase;
+                font-size: 12px;
+                border-top: 2px solid #1a5276;
+                border-bottom: 1px solid #d1d8dd;
+            }
+            .data-table td {
+                padding: 10px;
+                border-bottom: 1px solid #e1e8ed;
+                vertical-align: top;
+                font-size: 14px;
+            }
+            .summary-container {
+                margin-top: 20px;
+                display: flex;
+                justify-content: space-between;
+            }
+            .summary-left {
+                width: 60%;
+            }
+            .summary-right {
+                width: 35%;
+            }
+            .summary-table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            .summary-table td {
+                padding: 5px 0;
+            }
+            .summary-label { font-weight: 700; color: #1a5276; }
+            .summary-value { text-align: right; font-weight: 700; }
+            .grand-total-row td {
+                border-top: 2px solid #1a5276;
+                padding-top: 10px;
+                font-size: 16px;
+            }
+            .footer-note {
+                margin-top: 40px;
+                text-align: center;
+                font-size: 13px;
+                color: #555;
+                font-style: italic;
+                border-top: 1px solid #eee;
+                padding-top: 15px;
+            }
+            .text-right { text-align: right; }
+            .text-center { text-align: center; }
+            .amount-in-words {
+                margin-top: 15px;
+                font-size: 12px;
+                color: #666;
+                font-style: italic;
+            }
+            .payment-status {
+                margin-top: 5px;
+                font-weight: 700;
+                color: #28b463;
+            }
+            @media print {
+                .no-print { display: none; }
+                body { -webkit-print-color-adjust: exact; }
+            }
+        </style>
+    </head>
+    <body>
+    
+    <div class="header-container">
+        <div class="main-header-center">Goran GrossKopf Family Clinic (GGFC)</div>
+        <div class="clinic-header-sub">
+            <div class="header-left">
+                <img class="app-logo" src="/assets/healthcare/images/fpa-india-logo.svg" alt="App Logo">
+            </div>
+            <div class="clinic-info-right label-bold">
+                Survey No. 77/1, Kothrud, Next to Ved Bhavan,<br>
+                Near Chandani Chowk, Pune 411 038<br>
+                Ph. No: 020-25280160, 61, 62, 020-29516937
+            </div>
+        </div>
+    </div>
+    
+    <div class="invoice-title-container">
+        <div class="invoice-title">Sales Invoice</div>
+    </div>
+    
+    <div class="info-container">
+        <table class="info-table">
+            <tr>
+                <td class="field-label">Customer Name</td>
+                <td class="value">: <strong>{{ doc.customer_name }}</strong></td>
+                <td class="field-label">Invoice ID</td>
+                <td class="value">: {{ doc.name }}</td>
+            </tr>
+            <tr>
+                <td class="field-label">Mob</td>
+                <td class="value">: {{ doc.contact_mobile or "" }}</td>
+                <td class="field-label">Invoice Date</td>
+                <td class="value">: {{ frappe.format_date(doc.posting_date) }}</td>
+            </tr>
+            <tr>
+                <td class="field-label">&nbsp;</td>
+                <td class="value">&nbsp;</td>
+                <td class="field-label">Due Date</td>
+                <td class="value">: {{ frappe.format_date(doc.due_date) }}</td>
+            </tr>
+        </table>
+    </div>
+    
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th style="width: 5%;">SR</th>
+                <th style="width: 45%;">DETAILS</th>
+                <th style="width: 10%;" class="text-right">QTY</th>
+                <th style="width: 20%;" class="text-right">RATE</th>
+                <th style="width: 20%;" class="text-right">AMOUNT</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in doc.items %}
+            <tr>
+                <td>{{ item.idx }}</td>
+                <td>
+                    <strong>{{ item.item_name }}</strong>
+                    {% if item.description and item.description != item.item_name %}
+                    
+                    {% endif %}
+                </td>
+                <td class="text-right">{{ item.qty }} {{ item.uom }}</td>
+                <td class="text-right">{{ doc.currency }} {{ frappe.format_value(item.rate, item.meta.get_field('rate'), doc) }}</td>
+                <td class="text-right">{{ doc.currency }} {{ frappe.format_value(item.amount, item.meta.get_field('amount'), doc) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <div class="summary-container">
+        <div class="summary-left">
+            <div class="amount-in-words">
+                <strong>Amount in Words:</strong><br>
+                {{ doc.in_words }}
+            </div>
+            <div class="payment-status">
+                <strong>Payment Status:</strong> {{ doc.status }}
+            </div>
+        </div>
+        <div class="summary-right">
+            <table class="summary-table">
+                <tr>
+                    <td class="summary-label">Sub Total</td>
+                    <td class="summary-value">{{ doc.currency }} {{ frappe.format_value(doc.total, doc.meta.get_field('total'), doc) }}</td>
+                </tr>
+                {% for tax in doc.taxes %}
+                {% if tax.tax_amount %}
+                <tr>
+                    <td class="summary-label">{{ tax.description }}</td>
+                    <td class="summary-value">{{ doc.currency }} {{ frappe.format_value(tax.tax_amount, tax.meta.get_field('tax_amount'), doc) }}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                <tr class="grand-total-row">
+                    <td class="summary-label" style="font-size: 16px;">Total</td>
+                    <td class="summary-value" style="font-size: 16px;">{{ doc.currency }} {{ frappe.format_value(doc.grand_total, doc.meta.get_field('grand_total'), doc) }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    <div class="footer-note">
+        Thank you for visiting. Please follow the prescription instructions carefully.
+    </div>
+    
+    </body>
+    </html>
+
