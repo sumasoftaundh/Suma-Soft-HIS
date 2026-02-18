@@ -1,13 +1,13 @@
 <div align="center">
-<a href="https://frappehealth.com">
-    <img src="https://raw.githubusercontent.com/frappe/healthcare/develop/healthcare/public/images/healthcare.svg" height="128" alt="Marley Health Logo">
+<a href="https://sumasoft.com">
+    <img src="https://raw.githubusercontent.com/frappe/healthcare/develop/healthcare/public/images/healthcare.svg" height="128" alt="Suma Health Logo">
   </a>
-  <h2>Marley Health</h2>
+  <h2>Suma Health</h2>
   <p align="center">
     <p>Open source & easy-to-use hospital information system(HIS) for all healthcare organisations.</p>
   </p>
 
-  [Marley Health](https://marleyhealth.io)
+  [Suma Health](https://sumasoft.com)
 
  <div align="center" style="max-height: 40px;">
     <a href="https://frappecloud.com/marley/signup">
@@ -19,7 +19,7 @@
 
 ### Introduction
 
-Marley Health enables the health domain in ERPNext and has various features that will help healthcare practitioners, clinics and hospitals to leverage the power of Frappe and ERPNext. It is built on Frappe, a full-stack, meta-data driven, web framework, and integrates seamlessly with ERPNext, the most agile ERP software. Marley Health helps to manage healthcare workflows efficiently and most of the design is based on HL7 FHIR (Fast Health Interoperability Resources).
+Suma Health enables the health domain in ERPNext and has various features that will help healthcare practitioners, clinics and hospitals to leverage the power of Frappe and ERPNext. It is built on Frappe, a full-stack, meta-data driven, web framework, and integrates seamlessly with ERPNext, the most agile ERP software. Suma Health helps to manage healthcare workflows efficiently and most of the design is based on HL7 FHIR (Fast Health Interoperability Resources).
 
 
 ### Key Features
@@ -38,19 +38,19 @@ Using bench, [install ERPNext](https://github.com/frappe/bench#installation) as 
 Once ERPNext is installed, add health app to your bench by running
 
 ```sh
-$ bench get-app healthcare
+$ bench get-app suma_health
 ```
 
 After that, you can install health app on required site by running
 
 ```sh
-$ bench --site demo.com install-app healthcare
+$ bench --site demo.com install-app suma_health
 ```
 
 
 ### Documentation
 
-Complete documentation for Marley Health is available at https://marleyhealth.io/docs
+Complete documentation for Suma Health is available at https://marleyhealth.io/docs
 
 
 ### License
@@ -60,4 +60,4 @@ GNU GPL V3. See [license.txt](https://github.com/earthians/marley/blob/develop/l
 
 ### Credits
 
-Marley Health module is developed & maintained by [earthians](https://earthianslive.com) and community contributors.
+Suma Health module is developed & maintained by [Suma Soft](https://sumasoft.com) and community contributors.

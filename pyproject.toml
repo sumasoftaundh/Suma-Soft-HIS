@@ -2,7 +2,7 @@
 name = "suma_health"
 description = "Modern, Open Source HIS built on Frappe and ERPNext"
 authors = [
-    { name = "earthians Health Informatics Pvt. Ltd.", email = "info@earthianslive.com" },
+    { name = "Suma Soft Pvt Ltd", email = "abdm@sumasoft.net" },
 ]
 readme = "README.md"
 requires-python = ">=3.10"
