@@ -1,0 +1,28 @@
+/* Custom styles for Patient List */
+.list-container {
+    border-radius: 12px !important;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.list-main-section {
+    border-radius: 12px !important;
+    overflow: hidden;
+}
+
+.list-row-container {
+    border-radius: 12px !important;
+}
+
+/* Style for the table header */
+.list-row-head {
+    border-top-left-radius: 12px !important;
+    border-top-right-radius: 12px !important;
+    background-color: #fff0f6 !important;
+}
+
+/* Style for the last row to ensure bottom corners are rounded */
+.list-row:last-child {
+    border-bottom-left-radius: 12px !important;
+    border-bottom-right-radius: 12px !important;
+}

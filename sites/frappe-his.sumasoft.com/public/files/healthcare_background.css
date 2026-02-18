@@ -1,0 +1,30 @@
+/* Healthcare Background CSS */
+body {
+    background-image: url('/files/image.png');
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-attachment: fixed;
+    background-color: #f5f7fa; /* Light gray fallback */
+}
+
+/* Ensure content is readable over the background */
+.page-container {
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 8px;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Maintain steel blue headers */
+.page-head {
+    background-color: #4682b4 !important;
+    border-bottom: 1px solid #4682b4 !important;
+}
+
+/* Special styling for dashboard widgets to be readable on the background */
+.dashboard-section {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+}

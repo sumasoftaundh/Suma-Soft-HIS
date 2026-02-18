@@ -1,0 +1,9 @@
+*.zip
+*.log
+*.sql
+logs/
+sites/*/logs/
+sites/*/site_config.json
+apps/
+env/
+wget-log

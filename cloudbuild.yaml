@@ -1,0 +1,82 @@
+# Cloud Build configuration to build and push the Frappe image
+# Using Container Registry (gcr.io) per existing repo path
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+timeout: 2400s  # Increase timeout to 40 minutes
+
+substitutions:
+  _REGION: "asia-south1"
+  _REGISTRY: "gcr.io"
+  _REPO: "frappe_codebase"
+  _IMAGE: "frappe-cloudrun"
+  _PROJECT_ID: "sumatoolkitservice"
+  _SERVICE: "frappe-codebase"
+  # Database substitutions (set these in the Cloud Build Trigger)
+  _DB_TYPE: "mariadb"
+  _DB_HOST: "34.123.230.127"
+  _DB_PORT: "3306"
+  _DB_NAME: "frappe_site1"
+  _DB_USER: "root"
+  _DB_PASSWORD: "PKkzuWbdnqzGWXqtQmS61AFWka7EucXw"
+  # Optional Redis substitutions (leave blank to use embedded Redis)
+  _REDIS_CACHE_URL: ""
+  _REDIS_QUEUE_URL: ""
+  _REDIS_SOCKETIO_URL: ""
+
+steps:
+  # Log the full image tags we will use
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk:slim"
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        set -euo pipefail
+        echo "Using image tags:"
+        echo "  ${_REGISTRY}/${_PROJECT_ID}/${_REPO}/${_IMAGE}:$SHORT_SHA"
+        echo "  ${_REGISTRY}/${_PROJECT_ID}/${_REPO}/${_IMAGE}:latest"
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      - "build"
+      - "-t"
+      - "${_REGISTRY}/${_PROJECT_ID}/${_REPO}/${_IMAGE}:$SHORT_SHA"
+      - "-t"
+      - "${_REGISTRY}/${_PROJECT_ID}/${_REPO}/${_IMAGE}:latest"
+      - "."
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      - "push"
+      - "${_REGISTRY}/${_PROJECT_ID}/${_REPO}/${_IMAGE}:$SHORT_SHA"
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      - "push"
+      - "${_REGISTRY}/${_PROJECT_ID}/${_REPO}/${_IMAGE}:latest"
+
+  # Deploy to Cloud Run (allocates/updates the run.app URL)
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk:slim"
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - "${_SERVICE}"
+      - "--image=${_REGISTRY}/${_PROJECT_ID}/${_REPO}/${_IMAGE}:$SHORT_SHA"
+      - "--region=${_REGION}"
+      - "--project=${_PROJECT_ID}"
+      - "--platform=managed"
+      - "--allow-unauthenticated"
+      - "--set-env-vars=FRAPPE_ENV=production"
+      - "--set-env-vars=DB_TYPE=${_DB_TYPE}"
+      - "--set-env-vars=DB_HOST=${_DB_HOST}"
+      - "--set-env-vars=DB_PORT=${_DB_PORT}"
+      - "--set-env-vars=DB_NAME=${_DB_NAME}"
+      - "--set-env-vars=DB_USER=${_DB_USER}"
+      - "--set-env-vars=DB_PASSWORD=${_DB_PASSWORD}"
+      # If you have external Redis endpoints, set them via substitutions; otherwise entrypoint starts embedded redis
+      - "--set-env-vars=REDIS_CACHE_URL=${_REDIS_CACHE_URL}"
+      - "--set-env-vars=REDIS_QUEUE_URL=${_REDIS_QUEUE_URL}"
+      - "--set-env-vars=REDIS_SOCKETIO_URL=${_REDIS_SOCKETIO_URL}"
+
+images:
+  - "${_REGISTRY}/${_PROJECT_ID}/${_REPO}/${_IMAGE}:$SHORT_SHA"
+  - "${_REGISTRY}/${_PROJECT_ID}/${_REPO}/${_IMAGE}:latest

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Dashboard</title>
+    <style>
+        :root {
+            --primary-color: #ff69b4;
+            --background-color: #fff0f6;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+            --border-color: #ffc0cb;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            min-height: 100vh;
+        }
+        .sidebar {
+            background-color: #ffffff;
+            padding: 20px;
+            border-right: 1px solid var(--border-color);
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+        }
+        .menu-item {
+            padding: 12px 15px;
+            margin-bottom: 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .menu-item.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .menu-item:hover:not(.active) {
+            background-color: #ffebf3;
+        }
+        .main-content {
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .page-title {
+            font-size: 26px;
+            font-weight: bold;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        .stat-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        .stat-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .stat-value {
+            font-size: 26px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .appointments {
+            margin-bottom: 25px;
+        }
+        .appointment-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+        .appointment-card {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #fff;
+            border-left: 4px solid var(--primary-color);
+        }
+        .appointment-time {
+            font-weight: bold;
+            margin-right: 15px;
+            color: var(--primary-color);
+            width: 60px;
+        }
+        .appointment-details {
+            flex-grow: 1;
+        }
+        .appointment-patient {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .appointment-reason {
+            color: #666;
+            font-size: 14px;
+        }
+        .appointment-status {
+            background-color: #e6f7ff;
+            color: #0091ea;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+        .chart {
+            height: 250px;
+            position: relative;
+            margin-top: 15px;
+        }
+        .chart-placeholder {
+            background-color: #ffebf3;
+            height: 100%;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--primary-color);
+        }
+        .patient-list {
+            margin-top: 15px;
+        }
+        .patient-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .patient-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        .patient-name {
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+        .patient-details {
+            color: #666;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">🏥 Healthcare</div>
+            <div class="menu-item active">Dashboard</div>
+            <div class="menu-item">Appointments</div>
+            <div class="menu-item">Patients</div>
+            <div class="menu-item">Billing</div>
+            <div class="menu-item">Prescriptions</div>
+            <div class="menu-item">Inpatient</div>
+            <div class="menu-item">Therapy Planning</div>
+            <div class="menu-item">Settings</div>
+        </div>
+        <div class="main-content">
+            <div class="header">
+                <div class="page-title">Reception Dashboard</div>
+                <div class="user-info">
+                    <div class="avatar">DR</div>
+                    <span>Dr. Roberts</span>
+                </div>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-title">Todays Appointments</div>
+                    <div class="stat-value">24</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Waiting Patients</div>
+                    <div class="stat-value">7</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Completed Today</div>
+                    <div class="stat-value">16</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">New Patients</div>
+                    <div class="stat-value">5</div>
+                </div>
+            </div>
+            
+            <div class="appointments card">
+                <div class="card-header">
+                    <div class="card-title">Upcoming Appointments</div>
+                </div>
+                <div class="appointment-list">
+                    <div class="appointment-card">
+                        <div class="appointment-time">10:00 AM</div>
+                        <div class="appointment-details">
+                            <div class="appointment-patient">John Doe</div>
+                            <div class="appointment-reason">General Checkup</div>
+                        </div>
+                        <div class="appointment-status">Confirmed</div>
+                    </div>
+                    <div class="appointment-card">
+                        <div class="appointment-time">10:30 AM</div>
+                        <div class="appointment-details">
+                            <div class="appointment-patient">Jane Smith</div>
+                            <div class="appointment-reason">Follow-up</div>
+                        </div>
+                        <div class="appointment-status">Waiting</div>
+                    </div>
+                    <div class="appointment-card">
+                        <div class="appointment-time">11:15 AM</div>
+                        <div class="appointment-details">
+                            <div class="appointment-patient">Robert Johnson</div>
+                            <div class="appointment-reason">Lab Results</div>
+                        </div>
+                        <div class="appointment-status">Confirmed</div>
+                    </div>
+                    <div class="appointment-card">
+                        <div class="appointment-time">12:00 PM</div>
+                        <div class="appointment-details">
+                            <div class="appointment-patient">Emily Davis</div>
+                            <div class="appointment-reason">Consultation</div>
+                        </div>
+                        <div class="appointment-status">Confirmed</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Weekly Appointment Stats</div>
+                    </div>
+                    <div class="chart">
+                        <div class="chart-placeholder">Weekly Appointments Chart</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Recent Patients</div>
+                    </div>
+                    <div class="patient-list">
+                        <div class="patient-item">
+                            <div class="patient-avatar">JD</div>
+                            <div>
+                                <div class="patient-name">John Doe</div>
+                                <div class="patient-details">ID: P-1001 • 45 yrs</div>
+                            </div>
+                        </div>
+                        <div class="patient-item">
+                            <div class="patient-avatar">JS</div>
+                            <div>
+                                <div class="patient-name">Jane Smith</div>
+                                <div class="patient-details">ID: P-1002 • 37 yrs</div>
+                            </div>
+                        </div>
+                        <div class="patient-item">
+                            <div class="patient-avatar">RJ</div>
+                            <div>
+                                <div class="patient-name">Robert Johnson</div>
+                                <div class="patient-details">ID: P-1003 • 52 yrs</div>
+                            </div>
+                        </div>
+                        <div class="patient-item">
+                            <div class="patient-avatar">ED</div>
+                            <div>
+                                <div class="patient-name">Emily Davis</div>
+                                <div class="patient-details">ID: P-1004 • 29 yrs</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

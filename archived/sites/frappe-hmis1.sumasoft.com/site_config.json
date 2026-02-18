@@ -1,0 +1,9 @@
+{
+ "db_name": "_cb35521cef2af255",
+ "db_password": "XJUecAEQBANF4mfy",
+ "db_type": "mariadb",
+ "db_user": "_cb35521cef2af255",
+ "domains": [
+  "frappe-hmis1.sumasoft.com"
+ ]
+}
