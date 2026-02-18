@@ -33,7 +33,5 @@ known_erpnext = ["erpnext"]
 known_healthcare = ["healthcare"]
 sections = ["FUTURE", "STDLIB", "THIRDPARTY", "FRAPPE", "ERPNEXT", "HEALTHCARE", "FIRSTPARTY", "LOCALFOLDER"]
 
-[tool.bench]
-frappe-dependencies = [
-    { name = "frappe", version = ">=15.0.0" }
-]
+[tool.bench.frappe-dependencies]
+frappe = ">=15.0.0"
