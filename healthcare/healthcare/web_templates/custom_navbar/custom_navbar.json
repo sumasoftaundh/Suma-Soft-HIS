@@ -1,0 +1,13 @@
+{
+    "doctype": "Web Template",
+    "name": "Custom Navbar",
+    "type": "Component",
+    "standard": 1,
+    "module": "Healthcare",
+    "is_standard": 1,
+    "template": "{% include 'templates/includes/navbar/navbar.html' %}",
+    "_user_tags": null,
+    "_comments": null,
+    "_assign": null,
+    "_liked_by": null
+}

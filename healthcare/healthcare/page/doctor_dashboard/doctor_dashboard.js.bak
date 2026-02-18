@@ -1,0 +1,1007 @@
+
+// Refresh the dashboard when the page is shown
+frappe.pages['doctor_dashboard'].on_page_show = function() {
+    frappe.doctor_dashboard.refresh_data();
+};
+
+frappe.pages['doctor_dashboard'].on_page_load = function(wrapper) {
+    const page = frappe.ui.make_app_page({
+        parent: wrapper,
+        title: 'Doctor Dashboard',
+        single_column: true
+    });
+    
+    frappe.doctor_dashboard = frappe.doctor_dashboard || {};
+    
+    // Add the standard primary action button
+    page.set_primary_action('New Consultation', function() {
+        frappe.new_doc('Patient Encounter');
+    }, 'fa fa-stethoscope');
+    
+    // Add standard action buttons (these appear as secondary buttons)
+    page.add_action_icon('fa fa-flask', function() {
+        frappe.new_doc('Lab Test');
+    }, 'Order Lab Test');
+    
+    page.add_action_icon('fa fa-file-medical', function() {
+        frappe.new_doc('Drug Prescription');
+    }, 'Write Prescription');
+    
+    page.add_action_icon('fa fa-heartbeat', function() {
+        frappe.new_doc('Vital Signs');
+    }, 'Record Vitals');
+    
+    // Add custom button styles after the page loads
+    frappe.run_serially([
+        () => frappe.timeout(0.5),
+        () => {
+            // Make all buttons steel blue
+            $('.page-actions .btn').css({
+                'background-color': '#4682b4',
+                'border-color': '#4682b4',
+                'color': 'white',
+                'margin-left': '4px'
+            });
+        }
+    ]);
+    
+    // Add CSS
+    frappe.doctor_dashboard.add_css = function() {
+        // Custom style for header buttons to match steel blue theme
+        $('.custom-primary-actions .btn-primary').css({
+            'background-color': '#4682b4',
+            'border-color': '#4682b4',
+            'margin-left': '10px'
+        });
+        
+        // Add a style tag for the custom buttons
+        $('<style>' +
+            '.custom-primary-actions { display: flex; }' +
+            '.custom-primary-btn { margin-left: 10px; }' +
+            '.custom-primary-btn:hover { background-color: #3a6d99 !important; border-color: #3a6d99 !important; }' +
+        '</style>').appendTo('head');
+        
+        $('<style>' +
+            '/* Dashboard styles - matching Patient Portal theme */' +
+            '.doctor-dashboard-container {' +
+                'background-color: #f5f7fa;' +
+                'padding: 20px;' +
+                'border-radius: 8px;' +
+            '}' +
+            '.view-btn {' +
+                'display: inline-block;' +
+                'background-color: transparent;' +
+                'border: 1px solid #4682b4;' +
+                'color: #4682b4;' +
+                'border-radius: 4px;' +
+                'padding: 3px 10px;' +
+                'font-size: 12px;' +
+                'cursor: pointer;' +
+                'transition: all 0.2s;' +
+                'text-decoration: none;' +
+            '}' +
+            '.view-btn:hover {' +
+                'background-color: #4682b4;' +
+                'color: white;' +
+                'text-decoration: none;' +
+            '}' +
+            '.stats-card-container {' +
+                'display: flex;' +
+                'flex-wrap: wrap;' +
+                'gap: 10px;' +
+                'margin-bottom: 20px;' +
+                'width: 100%;' +
+            '}' +
+            '.stats-card {' +
+                'flex: 1;' +
+                'min-width: 220px;' +
+                'max-width: 25%;' +
+                'height: 145px;' +
+                'display: flex;' +
+                'flex-direction: column;' +
+                'padding: 20px;' +
+                'background-color: white;' +
+                'border-radius: 8px;' +
+                'box-shadow: 0 1px 3px rgba(0,0,0,0.12);' +
+                'position: relative;' +
+            '}' +
+            '.stats-card-icon {' +
+                'width: 40px;' +
+                'height: 40px;' +
+                'border-radius: 50%;' +
+                'display: flex;' +
+                'align-items: center;' +
+                'justify-content: center;' +
+                'color: #666;' +
+                'font-size: 24px;' +
+                'margin-bottom: 10px;' +
+                'position: absolute;' +
+                'left: 20px;' +
+                'top: 20px;' +
+            '}' +
+            '.stats-card-info {' +
+                'display: flex;' +
+                'flex-direction: column;' +
+                'justify-content: center;' +
+                'height: 100%;' +
+                'text-align: center;' +
+            '}' +
+            '.stats-card-value {' +
+                'font-size: 30px;' +
+                'font-weight: 700;' +
+                'color: #333;' +
+                'line-height: 1;' +
+                'margin-top: 20px;' +
+            '}' +
+            '.stats-card-label {' +
+                'font-size: 16px;' +
+                'color: #666;' +
+                'margin-top: 10px;' +
+                'font-weight: 500;' +
+            '}' +
+            '.dynamic-section {' +
+                'display: block;' +
+                'width: 100%;' +
+                'margin-bottom: 20px;' +
+            '}' +
+            '.dashboard-section {' +
+                'background-color: white;' +
+                'border-radius: 8px;' +
+                'margin-bottom: 20px;' +
+                'box-shadow: 0 1px 3px rgba(0,0,0,0.1);' +
+                'overflow: hidden;' +
+            '}' +
+            '.section-header {' +
+                'display: flex;' +
+                'justify-content: space-between;' +
+                'align-items: center;' +
+                'padding: 12px 15px;' +
+                'border-bottom: 1px solid #eee;' +
+                'background-color: #4682b4;' +
+                'color: white;' +
+            '}' +
+            '.section-title {' +
+                'font-size: 16px;' +
+                'font-weight: 500;' +
+                'display: flex;' +
+                'align-items: center;' +
+            '}' +
+            '.section-title i {' +
+                'margin-right: 8px;' +
+            '}' +
+            '.section-body {' +
+                'padding: 15px;' +
+            '}' +
+            '.dashboard-table {' +
+                'width: 100%;' +
+                'border-collapse: collapse;' +
+            '}' +
+            '.dashboard-table thead th {' +
+                'background-color: #f5f7fa;' +
+                'padding: 10px 15px;' +
+                'text-align: left;' +
+                'font-weight: 500;' +
+                'color: #333;' +
+                'border-bottom: 1px solid #eee;' +
+            '}' +
+            '.dashboard-table tbody td {' +
+                'padding: 12px 15px;' +
+                'border-bottom: 1px solid #eee;' +
+                'color: #333;' +
+                'font-size: 13px;' +
+            '}' +
+            '.dashboard-table tbody tr:last-child td {' +
+                'border-bottom: none;' +
+            '}' +
+            '.dashboard-table tbody tr:hover {' +
+                'background-color: #f9f9f9;' +
+            '}' +
+            '.action-button {' +
+                'display: inline-flex;' +
+                'align-items: center;' +
+                'justify-content: center;' +
+                'padding: 6px 12px;' +
+                'margin: 2px;' +
+                'border-radius: 4px;' +
+                'font-size: 12px;' +
+                'font-weight: 500;' +
+                'cursor: pointer;' +
+                'transition: background-color 0.2s;' +
+                'color: white;' +
+                'background-color: #4682b4;' +
+                'border: none;' +
+                'text-decoration: none;' +
+            '}' +
+            '.action-button:hover {' +
+                'background-color: #3a6d99;' +
+            '}' +
+            '.status-pill {' +
+                'display: inline-block;' +
+                'padding: 4px 10px;' +
+                'border-radius: 20px;' +
+                'font-size: 11px;' +
+                'font-weight: 500;' +
+                'text-align: center;' +
+                'text-transform: uppercase;' +
+                'min-width: 80px;' +
+            '}' +
+            '.status-scheduled {' +
+                'background-color: #e6f7ff;' +
+                'color: #1890ff;' +
+            '}' +
+            '.status-checked-in {' +
+                'background-color: #fff7e6;' +
+                'color: #fa8c16;' +
+            '}' +
+            '.status-completed {' +
+                'background-color: #f6ffed;' +
+                'color: #52c41a;' +
+            '}' +
+            '.status-overdue {' +
+                'background-color: #fff1f0;' +
+                'color: #f5222d;' +
+            '}' +
+            '.patient-search-section {' +
+                'margin-bottom: 20px;' +
+            '}' +
+            '.patient-search-box {' +
+                'display: flex;' +
+                'gap: 10px;' +
+                'align-items: center;' +
+            '}' +
+            '.search-input {' +
+                'flex-grow: 1;' +
+                'padding: 8px 12px;' +
+                'border: 1px solid #ddd;' +
+                'border-radius: 4px;' +
+            '}' +
+            '.quick-action-section {' +
+                'display: flex;' +
+                'gap: 10px;' +
+                'margin-bottom: 20px;' +
+                'flex-wrap: wrap;' +
+            '}' +
+            '.quick-action-btn {' +
+                'flex: 1;' +
+                'min-width: 150px;' +
+                'padding: 15px;' +
+            '}' +
+        '</style>').appendTo('head');
+
+    // Create the dashboard container
+    const container = $(wrapper).find('.layout-main-section');
+    container.empty();
+    
+    // Create main dashboard container
+    const dashboardHTML = '<div class="dashboard-container">' +
+        // Header with search
+        '<div class="dashboard-header">' +
+            '<div class="search-container">' +
+                '<input type="text" id="patient-search-input" placeholder="Search patient..." style="padding: 8px; border: 1px solid #ddd; border-radius: 4px; width: 250px;">' +
+                '<button id="patient-search-btn" style="margin-left: 10px; padding: 8px 15px; background-color: #4682b4; color: white; border: none; border-radius: 4px; cursor: pointer;">Search</button>' +
+            '</div>' +
+        '</div>' +
+        
+        // Stats Cards Section
+        '<div id="stats-container" class="stats-section">' +
+            '<div class="stats-card-container">' +
+                // Card 1: Lab Tests Today
+                '<div class="stats-card" style="background-color: #e6e0f8;">' +
+                    '<div class="stats-card-icon" style="background-color: #d1c4e9;">' +
+                        '<i class="fa fa-flask" style="color: #6200ee;"></i>' +
+                    '</div>' +
+                    '<div class="stats-card-info">' +
+                        '<div id="appointments-count" class="stats-card-value">0</div>' +
+                        '<div class="stats-card-label">Lab Tests Today</div>' +
+                    '</div>' +
+                '</div>' +
+                // Card 2: Pending Tests
+                '<div class="stats-card" style="background-color: #e3f2fd;">' +
+                    '<div class="stats-card-icon" style="background-color: #bbdefb;">' +
+                        '<i class="fa fa-hourglass-half" style="color: #0072ff;"></i>' +
+                    '</div>' +
+                    '<div class="stats-card-info">' +
+                        '<div id="pending-consultations-count" class="stats-card-value">0</div>' +
+                        '<div class="stats-card-label">Pending Tests</div>' +
+                    '</div>' +
+                '</div>' +
+                // Card 3: Reports Ready
+                '<div class="stats-card" style="background-color: #fff8e1;">' +
+                    '<div class="stats-card-icon" style="background-color: #ffecb3;">' +
+                        '<i class="fa fa-clipboard-check" style="color: #ff9800;"></i>' +
+                    '</div>' +
+                    '<div class="stats-card-info">' +
+                        '<div id="lab-reports-count" class="stats-card-value">0</div>' +
+                        '<div class="stats-card-label">Reports Ready</div>' +
+                    '</div>' +
+                '</div>' +
+                // Card 4: Overdue Tests
+                '<div class="stats-card" style="background-color: #ffebee;">' +
+                    '<div class="stats-card-icon" style="background-color: #ffcdd2;">' +
+                        '<i class="fa fa-exclamation-circle" style="color: #f44336;"></i>' +
+                    '</div>' +
+                    '<div class="stats-card-info">' +
+                        '<div id="admitted-patients-count" class="stats-card-value">0</div>' +
+                        '<div class="stats-card-label">Overdue Tests</div>' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+        '</div>' +
+        
+        // Main content rows
+        '<div class="dashboard-row">' +
+            '<div class="dashboard-col-left">' +
+                '<div id="appointments-container" class="dynamic-section" style="min-height: 50px;"></div>' +
+                '<div id="lab-reports-container" class="dynamic-section" style="min-height: 50px;"></div>' +
+            '</div>' +
+            '<div class="dashboard-col-right">' +
+                '<div id="consultations-container" class="dynamic-section" style="min-height: 50px;"></div>' +
+            '</div>' +
+        '</div>' +
+    '</div>';
+    
+    $('#patient-search-results').html('<div class="text-center"><i class="fa fa-spinner fa-spin"></i> Searching...</div>');
+    
+    frappe.call({
+        method: 'frappe.client.get_list',
+        args: {
+            doctype: 'Patient',
+            fields: ['name', 'patient_name', 'mobile', 'email', 'blood_group'],
+            filters: [
+                ['patient_name', 'like', '%' + searchTerm + '%'],
+                ['or', 'mobile', 'like', '%' + searchTerm + '%'],
+                ['or', 'email', 'like', '%' + searchTerm + '%'],
+                ['or', 'abha_id', 'like', '%' + searchTerm + '%']
+            ],
+            limit_page_length: 10
+        },
+        callback: function(r) {
+            if (r.message && r.message.length) {
+                let resultsHTML = '<div class="dashboard-table"><table class="table"><thead><tr>' +
+                    '<th>Patient ID</th><th>Patient Name</th><th>Mobile</th><th>Actions</th></tr></thead><tbody>';
+                
+                r.message.forEach(function(patient) {
+                    resultsHTML += '<tr>' +
+                        '<td>' + patient.name + '</td>' +
+                        '<td>' + patient.patient_name + '</td>' +
+                        '<td>' + (patient.mobile || '-') + '</td>' +
+                        '<td>' +
+                            '<a href="#Form/Patient/' + patient.name + '" class="action-button">View</a>' +
+                            '<button class="action-button" style="margin-left: 5px;" ' +
+                                'onclick="frappe.new_doc(\'Patient Encounter\', {patient: \'' + patient.name + '\'})">New Consultation</button>' +
+                        '</td>' +
+                    '</tr>';
+                });
+                
+                resultsHTML += '</tbody></table></div>';
+                $('#patient-search-results').html(resultsHTML);
+            } else {
+                $('#patient-search-results').html('<div class="alert alert-warning">No patients found matching "' + searchTerm + '"</div>');
+    container.append(dashboardHTML);
+    
+    // Add CSS for the grid layout
+    $('<style>' +
+        '.dashboard-row {' +
+            'display: flex;' +
+            'gap: 20px;' +
+        '}' +
+        '.dashboard-col-6 {' +
+            'flex: 0 0 calc(50% - 10px);' +
+            'width: calc(50% - 10px);' +
+        '}' +
+        '.dashboard-col-right {' +
+            'flex: 0 0 calc(50% - 10px);' +
+            'width: calc(50% - 10px);' +
+        '}' +
+        '.dashboard-col-left {' +
+            'flex: 0 0 calc(50% - 10px);' +
+            'width: calc(50% - 10px);' +
+            'display: flex;' +
+            'flex-direction: column;' +
+        '}' +
+        '.no-gap {' +
+            'margin: 0;' +
+            'padding: 0;' +
+        '}' +
+    '</style>').appendTo('head');
+    
+    // Create a layout with appointments and lab tests stacked on the left, consultations on the right
+    container.append('<div class="dashboard-row">' +
+                        '<div class="dashboard-col-left">' +
+                            '<div id="appointments-container" class="dynamic-section" style="min-height: 50px;"></div>' +
+                            '<div id="lab-reports-container" class="dynamic-section no-gap" style="min-height: 50px;"></div>' +
+                        '</div>' +
+                        '<div class="dashboard-col-right">' +
+                            '<div id="consultations-container" class="dynamic-section" style="min-height: 50px;"></div>' +
+                        '</div>' +
+                    '</div>');
+    
+    // Patient search functionality
+    $('#patient-search-btn').on('click', function() {
+        const searchTerm = $('#patient-search-input').val().trim();
+        if (!searchTerm) return;
+        
+        $('#patient-search-results').html('<div class="text-center"><i class="fa fa-spinner fa-spin"></i> Searching...</div>');
+        
+        frappe.call({
+            method: 'frappe.client.get_list',
+            args: {
+                doctype: 'Patient',
+                fields: ['name', 'patient_name', 'mobile', 'email', 'blood_group'],
+                filters: [
+                    ['patient_name', 'like', '%' + searchTerm + '%'],
+                    ['or', 'mobile', 'like', '%' + searchTerm + '%'],
+                    ['or', 'email', 'like', '%' + searchTerm + '%'],
+                    ['or', 'abha_id', 'like', '%' + searchTerm + '%']
+                ],
+                limit_page_length: 10
+            },
+            callback: function(r) {
+                if (r.message && r.message.length) {
+                    let resultsHTML = '<div class="dashboard-table"><table class="table"><thead><tr>' +
+                        '<th>Patient ID</th><th>Patient Name</th><th>Mobile</th><th>Actions</th></tr></thead><tbody>';
+                    
+                    r.message.forEach(function(patient) {
+                        resultsHTML += '<tr>' +
+                            '<td>' + patient.name + '</td>' +
+                            '<td>' + patient.patient_name + '</td>' +
+                            '<td>' + (patient.mobile || '-') + '</td>' +
+                            '<td>' +
+                                '<a href="#Form/Patient/' + patient.name + '" class="action-button">View</a>' +
+                                '<button class="action-button" style="margin-left: 5px;" ' +
+                                    'onclick="frappe.new_doc(\'Patient Encounter\', {patient: \'' + patient.name + '\'})">New Consultation</button>' +
+                            '</td>' +
+                        '</tr>';
+                    });
+                    
+                    resultsHTML += '</tbody></table></div>';
+                    $('#patient-search-results').html(resultsHTML);
+                } else {
+                    $('#patient-search-results').html('<div class="alert alert-warning">No patients found matching "' + searchTerm + '"</div>');
+                }
+            }
+        });
+    });
+    
+    // Allow pressing enter in search box
+    $('#patient-search-input').keypress(function(e) {
+        if (e.which === 13) { // Enter key
+            $('#patient-search-btn').click();
+        }
+    });
+
+    // Initialize refresh function
+    
+    // Load appointments function
+    frappe.doctor_dashboard.load_appointments = function() {
+        // Create a loading indicator first
+        $('#appointments-container').html('<div class="text-center">Loading appointments...</div>');
+        
+        // Debug in console
+        console.log('Loading appointments');
+        
+        // Section: Today's Appointments
+        frappe.call({
+            method: "frappe.client.get_list",
+            args: {
+                doctype: "Patient Appointment",
+                fields: ["name", "patient", "appointment_time", "status"],
+                filters: {appointment_date: frappe.datetime.get_today()},
+                limit_page_length: 10,
+                order_by: "appointment_time asc"
+            },
+            callback: function(r) {
+                // Debug response
+                console.log('Appointments response:', r);
+                
+                let html = '';
+                
+                // Create section header with steel blue background
+                html += '<div class="section-header" style="background-color: #4682b4; color: white; padding: 10px 15px; font-weight: 500; border-top-left-radius: 5px; border-top-right-radius: 5px; display: flex; justify-content: space-between; align-items: center;">' + 
+                        '<h4 style="margin: 0; font-size: 16px;"><i class="fa fa-calendar mr-2"></i>Appointments Today</h4>' +
+                        '<button class="btn btn-sm btn-light" onclick="frappe.set_route(\'List\', \'Patient Appointment\')" style="padding: 3px 8px; font-size: 12px;">View All</button>' +
+                        '</div>';
+                
+                // Generate table content if data exists
+                if(r.message && r.message.length) {
+                    html += '<div style="background-color: white; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; padding: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.12);">';
+                    html += '<table class="table table-hover" style="margin-bottom: 0;">';
+                    html += '<thead style="background-color: #f8f9fa;">' +
+                            '<tr>' +
+                                '<th style="border-bottom: 2px solid #dee2e6;">Time</th>' +
+                                '<th style="border-bottom: 2px solid #dee2e6;">Patient</th>' +
+                                '<th style="border-bottom: 2px solid #dee2e6;">Status</th>' +
+                                '<th style="border-bottom: 2px solid #dee2e6; text-align: right;">Action</th>' +
+                            '</tr>' +
+                            '</thead>';
+                    html += '<tbody>';
+                    
+                    r.message.forEach(row => {
+                        // Determine status badge color based on status
+                        let statusColor = '#28a745'; // Default green for completed
+                        let textColor = 'white';
+                        
+                        if(row.status === 'Scheduled') {
+                            statusColor = '#17a2b8'; // Info blue
+                            textColor = 'white';
+                        } else if(row.status === 'Cancelled') {
+                            statusColor = '#dc3545'; // Danger red
+                            textColor = 'white';
+                        } else if(row.status === 'Pending') {
+                            statusColor = '#ffc107'; // Warning yellow
+                            textColor = '#333';
+                        }
+                        
+                        html += '<tr>';
+                        html += '<td>' + frappe.datetime.get_time(row.appointment_time) + '</td>';
+                        html += '<td>' + row.patient + '</td>';
+                        html += '<td><span class="badge" style="background-color: ' + statusColor + '; color: ' + textColor + '; font-weight: normal; padding: 4px 8px; border-radius: 4px;">' + row.status + '</span></td>';
+                        html += '<td style="text-align: right;">';
+                        html += '<button onclick="frappe.new_doc(\'Patient Encounter\', {patient: \'' + row.patient + '\'})" ' + 
+                               'class="btn btn-sm" style="background-color: #4682b4; color: white; border: none;">Start Consultation</button>';
+                        html += '</td></tr>';
+                    });
+                    
+                    html += '</tbody></table></div>';
+                } else {
+                    html += '<div style="background-color: white; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; padding: 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.12);">' +
+                            '<div class="text-muted">No appointments scheduled for today</div>' +
+                            '</div>';
+                }
+                
+                $('#appointments-container').html(html);
+            }
+        });
+    };
+    
+    // Load consultations function
+    frappe.doctor_dashboard.load_recent_consultations = function() {
+        // Create a loading indicator first
+        $('#consultations-container').html('<div class="text-center">Loading consultations...</div>');
+        
+        // Debug in console
+        console.log('Loading recent consultations');
+        
+        // Section: Recent Consultations
+        frappe.call({
+            method: "frappe.client.get_list",
+            args: {
+                doctype: "Patient Encounter",
+                fields: ["name", "patient", "consultation_date", "status"],
+                filters: {},
+                limit_page_length: 10,
+                order_by: "consultation_date desc"
+            },
+            callback: function(r) {
+                // Debug response
+                console.log('Consultations response:', r);
+                
+                let html = '';
+                
+                // Create section header with steel blue background
+                html += '<div class="section-header" style="background-color: #4682b4; color: white; padding: 10px 15px; font-weight: 500; border-top-left-radius: 5px; border-top-right-radius: 5px; display: flex; justify-content: space-between; align-items: center;">' + 
+                        '<h4 style="margin: 0; font-size: 16px;"><i class="fa fa-stethoscope mr-2"></i>Recent Consultations</h4>' +
+                        '<button class="btn btn-sm btn-light" onclick="frappe.set_route(\'List\', \'Patient Encounter\')" style="padding: 3px 8px; font-size: 12px;">View All</button>' +
+                        '</div>';
+                
+                // Generate table content if data exists
+                if(r.message && r.message.length) {
+                    html += '<div style="background-color: white; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; padding: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.12);">';
+                    html += '<table class="table table-hover" style="margin-bottom: 0;">';
+                    html += '<thead style="background-color: #f8f9fa;">' +
+                            '<tr>' +
+                                '<th style="border-bottom: 2px solid #dee2e6;">Date</th>' +
+                                '<th style="border-bottom: 2px solid #dee2e6;">Patient</th>' +
+                                '<th style="border-bottom: 2px solid #dee2e6;">Status</th>' +
+                                '<th style="border-bottom: 2px solid #dee2e6; text-align: right;">Action</th>' +
+                            '</tr>' +
+                            '</thead>';
+                    html += '<tbody>';
+                    
+                    r.message.forEach(row => {
+                        // Determine status badge color based on status
+                        let statusColor = '#28a745'; // Default green for completed
+                        let textColor = 'white';
+                        
+                        if(row.status === 'Scheduled') {
+                            statusColor = '#17a2b8'; // Info blue
+                            textColor = 'white';
+                        } else if(row.status === 'Cancelled') {
+                            statusColor = '#dc3545'; // Danger red
+                            textColor = 'white';
+                        } else if(row.status === 'Pending') {
+                            statusColor = '#ffc107'; // Warning yellow
+                            textColor = '#333';
+                        }
+                        
+                        html += '<tr>';
+                        html += '<td>' + frappe.datetime.get_date(row.consultation_date) + '</td>';
+                        html += '<td>' + row.patient + '</td>';
+                        html += '<td><span class="badge" style="background-color: ' + statusColor + '; color: ' + textColor + '; font-weight: normal; padding: 4px 8px; border-radius: 4px;">' + row.status + '</span></td>';
+                        html += '<td style="text-align: right;">';
+                        html += '<button onclick="frappe.set_route(\'Form\', \'Patient Encounter\', \'' + row.name + '\')" ' + 
+                               'class="btn btn-sm" style="background-color: #4682b4; color: white; border: none;">View</button>';
+                        html += '</td></tr>';
+                    });
+                    
+                    html += '</tbody></table></div>';
+                } else {
+                    html += '<div style="background-color: white; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; padding: 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.12);">' +
+                            '<div class="text-muted">No recent consultations found</div>' +
+                            '</div>';
+                }
+                
+                $('#consultations-container').html(html);
+            }
+        });
+    };
+    
+    // Load lab reports function
+    frappe.doctor_dashboard.load_lab_reports = function() {
+        // Create a loading indicator first
+        $('#lab-reports-container').html('<div class="text-center">Loading lab reports...</div>');
+        
+        // Debug in console
+        console.log('Loading lab reports');
+        
+        // Section: Lab Reports Ready
+        frappe.call({
+            method: "frappe.client.get_list",
+            args: {
+                doctype: "Lab Test",
+                fields: ["name", "patient", "status", "template"],
+                filters: {},
+                limit_page_length: 10
+            },
+            callback: function(r) {
+                // Debug response
+                console.log('Lab reports response:', r);
+                
+                let html = '';
+                
+                // Create section header with steel blue background
+                html += '<div class="section-header" style="background-color: #4682b4; color: white; padding: 10px 15px; font-weight: 500; border-top-left-radius: 5px; border-top-right-radius: 5px; display: flex; justify-content: space-between; align-items: center;">' + 
+                        '<h4 style="margin: 0; font-size: 16px;"><i class="fa fa-flask mr-2"></i>Lab Test Reports</h4>' +
+                        '<button class="btn btn-sm btn-light" onclick="frappe.set_route(\'List\', \'Lab Test\')" style="padding: 3px 8px; font-size: 12px;">View All</button>' +
+                        '</div>';
+                
+                // Generate table content if data exists
+                if(r.message && r.message.length) {
+                    html += '<div style="background-color: white; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; padding: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.12);">';
+                    html += '<table class="table table-hover" style="margin-bottom: 0;">';
+                    html += '<thead style="background-color: #f8f9fa;">' +
+                            '<tr>' +
+                                '<th style="border-bottom: 2px solid #dee2e6;">Test</th>' +
+                                '<th style="border-bottom: 2px solid #dee2e6;">Patient</th>' +
+                                '<th style="border-bottom: 2px solid #dee2e6;">Status</th>' +
+                                '<th style="border-bottom: 2px solid #dee2e6; text-align: right;">Action</th>' +
+                            '</tr>' +
+                            '</thead>';
+                    html += '<tbody>';
+                    
+                    r.message.forEach(function(row) {
+                        // Define status badge color based on status
+                        let statusColor = '#28a745';
+                        let textColor = 'white';
+                        
+                        if(row.status === 'Draft') {
+                            statusColor = '#f8bb86';
+                            textColor = '#333';
+                        } else if(row.status === 'Cancelled') {
+                            statusColor = '#dc3545';
+                        } else if(row.status === 'Pending') {
+                            statusColor = '#ffc107';
+                            textColor = '#333';
+                        }
+                        
+                        html += '<tr>';
+                        html += '<td>' + (row.template || row.name) + '</td>';
+                        html += '<td>' + row.patient + '</td>';
+                        html += '<td><span class="badge" style="background-color: ' + statusColor + '; color: ' + textColor + '; font-weight: normal; padding: 4px 8px; border-radius: 4px;">' + row.status + '</span></td>';
+                        html += '<td style="text-align: right;"><button onclick="frappe.set_route(\'Form\', \'Lab Test\', \'' + row.name + '\')" ' + 
+                                'class="btn btn-sm" style="background-color: #4682b4; color: white; border: none;">View</button></td>';
+                        html += '</tr>';
+                    });
+                    
+                    html += '</tbody></table></div>';
+                } else {
+                    html += '<div style="background-color: white; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; padding: 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.12);">' +
+                            '<div class="text-muted">No lab tests found</div>' +
+                            '</div>';
+                }
+                
+                $('#lab-reports-container').html(html);
+            }
+        });
+    };
+
+// Allow pressing enter in search box
+$('#patient-search-input').keypress(function(e) {
+    if (e.which === 13) { // Enter key
+        $('#patient-search-btn').click();
+    }
+});
+
+// Initialize refresh function
+frappe.doctor_dashboard.refresh_data = function() {
+    // Just clear contents without removing containers
+    $('#appointments-container, #consultations-container, #lab-reports-container').empty();
+
+    // Load Stats Counts
+    frappe.doctor_dashboard.load_stats_counts();
+
+    // Refresh Appointments Today
+    frappe.doctor_dashboard.load_appointments();
+
+    // Refresh Recent Consultations
+    frappe.doctor_dashboard.load_recent_consultations();
+
+    // Refresh Lab Reports
+    frappe.doctor_dashboard.load_lab_reports();
+};
+
+// Load Statistics Cards Data
+frappe.doctor_dashboard.load_stats_counts = function() {
+    // Set loading indicators
+    $('#appointments-count, #pending-consultations-count, #lab-reports-count, #admitted-patients-count').html('<i class="fa fa-spinner fa-spin"></i>');
+    
+    // 1. Count Appointments Today
+    frappe.call({
+        method: "frappe.client.get_list",
+        args: {
+            doctype: "Patient Appointment",
+            fields: ["count(name) as count"],
+            filters: { appointment_date: frappe.datetime.get_today() }
+        },
+        callback: function(r) {
+            $('#appointments-count').text(r.message && r.message.length ? r.message[0].count : 0);
+        }
+    });
+    
+    // 2. Count Pending Consultations
+    frappe.call({
+        method: "frappe.client.get_list",
+        args: {
+            doctype: "Patient Encounter",
+            fields: ["count(name) as count"],
+            filters: { docstatus: 0 } // Draft status
+        },
+        callback: function(r) {
+            $('#pending-consultations-count').text(r.message && r.message.length ? r.message[0].count : 0);
+        }
+    });
+    
+    // 3. Count Lab Reports to Review
+    frappe.call({
+        method: "frappe.client.get_list",
+        args: {
+            doctype: "Lab Test",
+            fields: ["count(name) as count"],
+            filters: { status: "Completed", docstatus: 0 } // Completed but not submitted
+        },
+        callback: function(r) {
+            $('#lab-reports-count').text(r.message && r.message.length ? r.message[0].count : 0);
+        }
+    });
+    
+    // 4. Count Admitted Patients
+    frappe.call({
+        method: "frappe.client.get_list",
+        args: {
+            doctype: "Inpatient Record",
+            fields: ["count(name) as count"],
+            filters: { status: "Admitted" }
+        },
+        callback: function(r) {
+            $('#admitted-patients-count').text(r.message && r.message.length ? r.message[0].count : 0);
+        }
+    });
+};
+
+// Load appointments function
+frappe.doctor_dashboard.load_appointments = function() {
+    // Create a loading indicator first
+    $('#appointments-container').html('<div class="dashboard-section"><div class="section-body text-center">Loading appointments...</div></div>');
+
+    // Debug in console
+    console.log('Loading appointments for today:', frappe.datetime.get_today());
+
+    // Section: Appointments Today
+    frappe.call({
+        method: "frappe.client.get_list",
+        args: {
+            doctype: "Patient Appointment",
+            fields: ["name", "patient", "appointment_time", "status"],
+            filters: {
+                appointment_date: frappe.datetime.get_today()
+            },
+            limit_page_length: 5
+        },
+        callback: function(r) {
+            // Debug response
+            console.log('Appointments response:', r);
+
+            // Build HTML for appointments
+            let html = '<div class="dashboard-section"><div class="section-header"><div class="section-title"><i class="fa fa-calendar"></i>Appointments Today</div></div>' +
+                '<div class="section-body"><table class="table table-bordered dashboard-table"><thead><tr><th>Time</th><th>Patient</th><th>Status</th><th>Actions</th></tr></thead><tbody>';
+
+            if (r.message && Array.isArray(r.message)) {
+                r.message.forEach(row => {
+                    let statusClass = '';
+                    if (row.status === 'Scheduled') statusClass = 'status-scheduled';
+                    if (row.status === 'Checked In') statusClass = 'status-checked-in';
+                    if (row.status === 'Completed') statusClass = 'status-completed';
+
+                    html += '<tr>' +
+                        '<td>' + frappe.datetime.get_time(row.appointment_time) + '</td>' +
+                        '<td>' + row.patient + '</td>' +
+                        '<td><span class="status-pill ' + statusClass + '">' + row.status + '</span></td>' +
+                        '<td><button class="action-button" onclick="frappe.new_doc(\'Patient Encounter\', {patient: \'' + row.patient + '\'})">' + 'Start Consultation</button></td>' +
+                        '</tr>';
+                });
+
+                if (r.message.length === 0) {
+                    html += '<tr><td colspan="4" class="text-center">No appointments scheduled for today</td></tr>';
+                }
+            } else {
+                html += '<tr><td colspan="4" class="text-center">Error loading appointments</td></tr>';
+                console.error('Invalid appointments response:', r);
+            }
+
+            html += '</tbody></table></div></div>';
+            $('#appointments-container').html(html);
+        }
+    });
+};
+
+// Load recent consultations function
+frappe.doctor_dashboard.load_recent_consultations = function() {
+    // Create a loading indicator first
+    $('#consultations-container').html('<div class="dashboard-section"><div class="section-body text-center">Loading recent consultations...</div></div>');
+
+    // Debug in console
+    console.log('Loading recent consultations');
+
+    // Section: Recent Consultations
+    frappe.call({
+        method: "frappe.client.get_list",
+        args: {
+            doctype: "Patient Encounter",
+            fields: ["name", "patient", "encounter_date", "diagnosis"],
+            limit_page_length: 5,
+            order_by: "creation desc"
+        },
+        callback: function(r) {
+            // Debug response
+            console.log('Consultations response:', r);
+
+            let html = '<div class="dashboard-section"><div class="section-header"><div class="section-title"><i class="fa fa-stethoscope"></i>Recent Consultations</div></div>' +
+                '<div class="section-body"><table class="table dashboard-table"><thead><tr><th>Date</th><th>Patient</th><th>Diagnosis</th><th>Actions</th></tr></thead><tbody>';
+
+            if (r.message && Array.isArray(r.message)) {
+                r.message.forEach(row => {
+                    html += '<tr>' +
+                        '<td>' + row.encounter_date + '</td>' +
+                        '<td>' + row.patient + '</td>' +
+                        '<td>' + ((row.diagnosis || []).map(d => d.diagnosis).join(", ") || 'Not specified') + '</td>' +
+                        '<td><button onclick="frappe.set_route(\'Form\', \'Patient Encounter\', \'' + row.name + '\')" class="view-btn">View</button></td>' +
+                        '</tr>';
+                });
+
+                if (r.message.length === 0) {
+                    html += '<tr><td colspan="4" class="text-center">No recent consultations found</td></tr>';
+                }
+            } else {
+                html += '<tr><td colspan="4" class="text-center">Error loading consultations</td></tr>';
+                console.error('Invalid consultations response:', r);
+            }
+
+            html += '</tbody></table></div></div>';
+            $('#consultations-container').html(html);
+        }
+    });
+};
+frappe.doctor_dashboard.load_lab_reports = function() {
+    // Create a loading indicator first
+    $('#lab-reports-container').html('<div class="dashboard-section"><div class="section-body text-center">Loading lab reports...</div></div>');
+    
+    // Debug in console
+    console.log('Loading lab reports');
+    
+    // Simple lab test listing
+    frappe.call({
+        method: "frappe.client.get_list",
+        args: {
+            doctype: "Lab Test",
+            fields: ["name", "patient", "status"],
+            filters: {},
+            limit_page_length: 10
+        },
+        callback: function(r) {
+            // Debug response
+            console.log('Lab reports response:', r);
+            
+            // Create modern table matching the provided design
+            let html = '<div class="dashboard-section">';
+            html += '<div class="section-header" style="background-color: #4682b4; color: white;"><div class="section-title"><i class="fa fa-flask"></i> Lab Tests</div></div>';
+            html += '<div class="section-body" style="padding: 0; background-color: white; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.12);">';
+            html += '<style>';
+            html += '.modern-table {width: 100%; border-collapse: collapse; font-size: 13px; background-color: white;}';
+            html += '.modern-table thead {background-color: #f9fafb; border-bottom: 1px solid #eef0f2;}';
+            html += '.modern-table th {text-align: left; padding: 12px 15px; color: #666; font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;}';
+            html += '.modern-table td {padding: 12px 15px; vertical-align: middle;}';
+            html += '.modern-table tbody tr:nth-child(even) {background-color: #f5f7fa;}';
+            html += '.modern-table tbody tr {border-bottom: 1px solid #eef0f2;}';
+            html += '.modern-table tbody tr:hover {background-color: #f0f4f8;}';
+            html += '.status-badge {display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 500;}';
+            html += '.status-pending {background-color: #fff8e1; color: #ffa000;}';
+            html += '.status-completed {background-color: #e8f5e9; color: #2e7d32;}';
+            html += '.status-failed {background-color: #ffebee; color: #c62828;}';
+            html += '.view-btn {background-color: transparent; border: 1px solid #4682b4; color: #4682b4; border-radius: 4px; padding: 3px 10px; font-size: 12px; cursor: pointer; transition: all 0.2s;}';
+            html += '.view-btn:hover {background-color: #4682b4; color: white;}';
+            html += '.dashboard-section {margin-bottom: 20px;}';
+            html += '</style>';
+            html += '<table class="modern-table">';
+            html += '<thead><tr><th>Test ID</th><th>Patient</th><th>Status</th><th width="100">Actions</th></tr></thead>';
+            html += '<tbody>';
+            
+            if (r.message && Array.isArray(r.message)) {
+                if (r.message.length === 0) {
+                    html += '<tr><td colspan="4" class="text-center">No lab tests found</td></tr>';
+                } else {
+                    r.message.forEach(function(row) {
+                        // Create table row
+                        html += '<tr>';
+                        html += '<td style="font-weight: 500;">' + (row.name || '') + '</td>';
+                        html += '<td>' + (row.patient || '') + '</td>';
+                        
+                        // Add status with appropriate styling
+                        let statusClass = '', statusText = row.status || '';
+                        if (statusText.toLowerCase() === 'completed') {
+                            statusClass = 'status-completed';
+                        } else if (statusText.toLowerCase() === 'pending') {
+                            statusClass = 'status-pending';
+                        } else {
+                            statusClass = 'status-failed';
+                        }
+                        
+                        html += '<td><span class="status-badge ' + statusClass + '">' + statusText + '</span></td>';
+                        html += '<td><button onclick="frappe.set_route(\'Form\', \'Lab Test\', \'' + row.name + '\')" class="view-btn">View</button></td>';
+                        html += '</tr>';
+                    });
+                }
+            } else {
+                html += '<tr><td colspan="4" class="text-center">Error loading lab tests</td></tr>';
+                console.error('Invalid lab reports response:', r);
+            }
+            
+            html += '</tbody></table></div></div>';
+            
+            // Set the HTML content
+            $('#lab-reports-container').html(html);
+            
+            // Add click handler for the view button
+            $('.view-btn').on('click', function() {
+                const testId = $(this).closest('tr').find('td:first').text();
+                frappe.set_route('Form', 'Lab Test', testId);
+            });
+        }
+    });
+};
+
+// Initialize the dashboard and attach event handlers
+frappe.doctor_dashboard.init_dashboard = function() {
+    // Load dashboard data in stages
+    setTimeout(() => {
+        frappe.doctor_dashboard.load_stats_counts();
+        frappe.doctor_dashboard.load_appointments();
+        frappe.doctor_dashboard.load_lab_reports();
+        frappe.doctor_dashboard.load_recent_consultations();
+    }, 300);
+};
+
+// Initialize the dashboard
+frappe.doctor_dashboard.init_dashboard();
+
+// Close the on_page_load function
+};

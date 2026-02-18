@@ -1,0 +1,162 @@
+/* Patient Portal Theme with light grey background, white panels, and steel blue accents */
+:root {
+    --background-color: #f5f7fa; /* Light grey background */
+    --panel-bg-color: #ffffff; /* White panel background */
+    --accent-color: #4682b4; /* Steel blue accent */
+    --text-color: #333333; /* Dark text */
+    --light-text: #ffffff; /* White text for dark backgrounds */
+    --border-color: #e2e8f0; /* Light border color */
+    --hover-bg: #f8fafb; /* Subtle hover background */
+}
+
+/* Apply background color to match image */
+body {
+    background-color: var(--background-color) !important;
+}
+
+/* Set Patient list page background to white */
+body[data-route="List/Patient/List"] {
+    background-color: #ffffff !important;
+}
+
+/* Set frappe-list background to white */
+body[data-route="List/Patient/List"] .frappe-list,
+body[data-route="List/Patient/List"] .list-view-section,
+body[data-route="List/Patient/List"] .list-view-container,
+body[data-route="List/Patient/List"] .result,
+body[data-route="List/Patient/List"] .list-renderer-wrapper,
+body[data-route="List/Patient/List"] .page-container {
+    background-color: #ffffff !important;
+}
+
+
+
+/* Style the table header and rows to match the image exactly */
+body[data-route="List/Patient/List"] .list-row-head {
+    background-color: #2e62ac !important;
+    color: var(--light-text) !important;
+    border-radius: 6px 6px 0 0 !important;
+    font-weight: 500 !important;
+}
+
+body[data-route="List/Patient/List"] .list-row-head .list-col {
+    color: var(--light-text) !important;
+}
+
+/* Style the list container to match the white panel in the image */
+body[data-route="List/Patient/List"] .list-row-container {
+    background-color: var(--panel-bg-color) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+    margin-bottom: 15px !important;
+    overflow: hidden !important;
+}
+
+/* Style the filter area to match the image */
+body[data-route="List/Patient/List"] .filter-list,
+body[data-route="List/Patient/List"] .filter-section,
+body[data-route="List/Patient/List"] .list-filters,
+body[data-route="List/Patient/List"] .list-filter-area {
+    background-color: var(--panel-bg-color) !important;
+    border-radius: 8px 8px 0 0 !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+    margin-bottom: 0 !important;
+    padding: 10px !important;
+}
+
+/* Style the list rows to match the image */
+body[data-route="List/Patient/List"] .list-row {
+    border-bottom: 1px solid var(--border-color) !important;
+    transition: background-color 0.2s !important;
+}
+
+body[data-route="List/Patient/List"] .list-row:last-child {
+    border-bottom: none !important;
+}
+
+body[data-route="List/Patient/List"] .list-row:hover {
+    background-color: var(--hover-bg) !important;
+}
+
+/* Style the input fields to match the image */
+body[data-route="List/Patient/List"] .form-control {
+    border-radius: 4px !important;
+    border: 1px solid var(--border-color) !important;
+    background-color: var(--panel-bg-color) !important;
+}
+
+/* Style the Add Patient button to match the image */
+.page-actions .btn-primary, [data-label="Add Patient"], .primary-action {
+    background-color: var(--accent-color) !important;
+    border-color: var(--accent-color) !important;
+    color: var(--light-text) !important;
+    border-radius: 4px !important;
+    font-weight: 500 !important;
+    padding: 6px 12px !important;
+}
+
+/* Hide right sidebar filter bar and expand patient list width for Patient list view */
+body[data-route="List/Patient/List"] .layout-side-section {
+    display: none !important;
+    width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+}
+
+body[data-route="List/Patient/List"] .layout-main-section-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex-basis: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+body[data-route="List/Patient/List"] .layout-main-section {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+body[data-route="List/Patient/List"] .list-row-container {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+body[data-route="List/Patient/List"] .list-row {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+body[data-route="List/Patient/List"] .filter-section {
+    width: 100% !important;
+}
+
+/* Make text-muted white in Patient list */
+body[data-route="List/Patient/List"] .text-muted {
+    color: #ffffff !important;
+}
+
+/* Override any responsive behavior that might reintroduce the sidebar */
+@media (min-width: 768px) {
+    body[data-route="List/Patient/List"] .layout-side-section {
+        display: none !important;
+    }
+    
+    body[data-route="List/Patient/List"] .layout-main-section-wrapper {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}
+
+/* Force the patient list to use the full width at all screen sizes */
+@media (min-width: 992px) {
+    body[data-route="List/Patient/List"] .col-lg-2 {
+        display: none !important;
+    }
+    
+    body[data-route="List/Patient/List"] .col-lg-10 {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+    }
+}

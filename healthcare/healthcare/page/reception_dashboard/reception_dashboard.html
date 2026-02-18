@@ -1,0 +1,445 @@
+<div id="reception-dashboard-container">
+    <div class="page-actions">
+        <button class="btn btn-primary" data-action="new-appointment">New Appointment</button>
+        <button class="btn btn-primary" data-action="new-patient">New Patient</button>
+    </div>
+    <div class="stats-grid" id="stats-summary">
+        <div class="stats-card">
+            <div class="stats-value" id="total-patients-count">0</div>
+            <div class="stats-label">Total Patients</div>
+        </div>
+        <div class="stats-card">
+            <div class="stats-value" id="total-appointments-count">0</div>
+            <div class="stats-label">Todays Appointments</div>
+        </div>
+        <div class="stats-card">
+            <div class="stats-value" id="total-doctors-count">0</div>
+            <div class="stats-label">Total Doctors</div>
+        </div>
+        <div class="stats-card">
+            <div class="stats-value" id="checked-in-count">0</div>
+            <div class="stats-label">Checked In</div>
+        </div>
+        <div class="stats-card">
+            <div class="stats-value" id="new-registrations-count">0</div>
+            <div class="stats-label">New Registrations</div>
+        </div>
+        <div class="stats-card">
+            <div class="stats-value" id="missed-appointments-count">0</div>
+            <div class="stats-label">Missed/Cancelled</div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4>Today Appointments</h4>
+                    <div class="form-inline" id="appointment-filters">
+                        <select id="doctor-filter" class="form-control form-control-sm mr-2">
+                            <option value="">All Doctors</option>
+                        </select>
+                        <select id="department-filter" class="form-control form-control-sm mr-2">
+                            <option value="">All Departments</option>
+                        </select>
+                        <select id="status-filter" class="form-control form-control-sm">
+                            <option value="">All Status</option>
+                            <option value="Scheduled">Scheduled</option>
+                            <option value="Checked In">Checked In</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Patient</th>
+                                <th>Doctor</th>
+                                <th>Department</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="appointments-list">
+                            <!-- Appointments list will be rendered here by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Token Queue Management -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h4>Token Queue Management</h4>
+                </div>
+                <div class="card-body" id="token-queue-container">
+                    <!-- Token queue will be rendered here by JS -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Right Column -->
+        <div class="dashboard-column">
+            <!-- Doctor Availability Status -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h4>Doctor Availability</h4>
+                </div>
+                <div class="card-body" id="doctor-availability">
+                    <!-- Doctor availability will be rendered here by JS -->
+                </div>
+            </div>
+            
+            <!-- Waiting Area View -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h4>Waiting Area</h4>
+                </div>
+                <div class="card-body" id="waiting-area">
+                    <!-- Waiting area will be rendered here by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for New Patient Registration -->
+    <div class="modal fade" id="new-patient-modal" tabindex="-1" role="dialog" aria-labelledby="newPatientModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newPatientModalLabel">Register New Patient</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="new-patient-form">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="patient_name">Patient Name</label>
+                                <input type="text" class="form-control" id="patient_name" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="patient_age">Age</label>
+                                <input type="number" class="form-control" id="patient_age" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="patient_gender">Gender</label>
+                                <select class="form-control" id="patient_gender" required>
+                                    <option value="">Select</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="patient_mobile">Contact Number</label>
+                                <input type="text" class="form-control" id="patient_mobile" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="patient_email">Email</label>
+                                <input type="email" class="form-control" id="patient_email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="patient_address">Address</label>
+                            <textarea class="form-control" id="patient_address" rows="2"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="patient_insurance">Insurance Provider</label>
+                                <input type="text" class="form-control" id="patient_insurance">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="patient_insurance_id">Insurance ID</label>
+                                <input type="text" class="form-control" id="patient_insurance_id">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="save-new-patient">Save Patient</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Quick Appointment Booking -->
+    <div class="modal fade" id="quick-appointment-modal" tabindex="-1" role="dialog" aria-labelledby="quickAppointmentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="quickAppointmentModalLabel">Book New Appointment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="quick-appointment-form">
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="appointment_patient">Patient</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="appointment_patient" required>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="button" id="search-patient-btn">Search</button>
+                                    </div>
+                                </div>
+                                <small class="form-text text-muted">Search existing patient or add a new one</small>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="appointment_department">Department</label>
+                                <select class="form-control" id="appointment_department" required>
+                                    <option value="">Select Department</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="appointment_doctor">Doctor</label>
+                                <select class="form-control" id="appointment_doctor" required>
+                                    <option value="">Select Doctor</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="appointment_date">Date</label>
+                                <input type="date" class="form-control" id="appointment_date" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="appointment_time">Time Slot</label>
+                                <select class="form-control" id="appointment_time" required>
+                                    <option value="">Select Time Slot</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="appointment_reason">Reason for Visit</label>
+                                <textarea class="form-control" id="appointment_reason" rows="2"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="walk_in_patient">
+                            <label class="form-check-label" for="walk_in_patient">Mark as Walk-in Patient</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="save-appointment">Book Appointment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    :root {
+        --primary-color: #4682b4;
+        --bg-color: #f5f7fa;
+        --text-color: #333;
+        --card-bg: #ffffff;
+        --border-color: #e0e0e0;
+    }
+    
+    #reception-dashboard-container {
+        padding: 15px;
+        background-color: var(--bg-color);
+        min-height: calc(100vh - 60px);
+    }
+    
+    .page-actions .btn {
+        margin-right: 10px;
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+        color: white;
+    }
+    
+    /* Stats Cards */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-bottom: 25px;
+    }
+    
+    .stat-card {
+        background-color: var(--card-bg);
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    }
+    
+    .stat-card h3 {
+        font-size: 2.2rem;
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-top: 10px;
+        margin-bottom: 0;
+    }
+    
+    .stat-card p {
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 0;
+    }
+    
+    /* Dashboard Grid */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: 3fr 2fr;
+        gap: 20px;
+    }
+    
+    .dashboard-column {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .dashboard-card {
+        background-color: var(--card-bg);
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+    
+    .card-header {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 15px 20px;
+        font-weight: 500;
+    }
+    
+    .card-body {
+        padding: 20px;
+    }
+    
+    /* Table Styles */
+    .table-responsive {
+        overflow-x: auto;
+    }
+    
+    .table {
+        width: 100%;
+        margin-bottom: 0;
+    }
+    
+    .table th {
+        background-color: rgba(70, 130, 180, 0.1);
+        border-top: none;
+    }
+    
+    .table-hover tbody tr:hover {
+        background-color: rgba(70, 130, 180, 0.05);
+    }
+    
+    /* Button Styles */
+    .btn-primary {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+    
+    .btn-outline-primary {
+        color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+    
+    /* Status Badges */
+    .badge-scheduled {
+        background-color: #17a2b8;
+        color: white;
+    }
+    
+    .badge-checked-in {
+        background-color: #28a745;
+        color: white;
+    }
+    
+    .badge-in-progress {
+        background-color: #fd7e14;
+        color: white;
+    }
+    
+    .badge-completed {
+        background-color: #6c757d;
+        color: white;
+    }
+    
+    .badge-cancelled {
+        background-color: #dc3545;
+        color: white;
+    }
+    
+    /* Token Styles */
+    .token-display {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background-color: var(--primary-color);
+        color: white;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 15px;
+    }
+    
+    /* Doctor Status */
+    .doctor-status {
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .status-available {
+        background-color: rgba(40, 167, 69, 0.1);
+        border-left: 4px solid #28a745;
+    }
+    
+    .status-in-consultation {
+        background-color: rgba(253, 126, 20, 0.1);
+        border-left: 4px solid #fd7e14;
+    }
+    
+    .status-break {
+        background-color: rgba(108, 117, 125, 0.1);
+        border-left: 4px solid #6c757d;
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 992px) {
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .dashboard-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

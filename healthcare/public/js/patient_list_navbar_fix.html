@@ -1,0 +1,200 @@
+<!-- Direct HTML fix for Patient List Navbar -->
+<script>
+// This script runs immediately when inserted into the page
+(function() {
+    console.log('Running immediate patient list navbar fix...');
+    
+    // Create and inject the navbar as soon as this script runs
+    function createFixedNavbar() {
+        console.log('Creating fixed patient list navbar...');
+        
+        // Remove any existing direct navbars to avoid duplicates
+        $('.suma-direct-navbar').remove();
+        
+        // Create navbar container with absolute positioning
+        const $navbar = $('<div class="suma-direct-navbar"></div>').css({
+            'position': 'fixed',
+            'top': '72px',  // Position below the main header
+            'right': '20px',
+            'z-index': '9999',
+            'display': 'flex',
+            'gap': '10px',
+            'background-color': 'transparent',
+            'box-shadow': '0 2px 5px rgba(0,0,0,0.1)',
+            'padding': '5px',
+            'border-radius': '4px'
+        });
+        
+        // Create the buttons
+        const $addButton = $('<button class="btn btn-primary"></button>').html('Add Patient');
+        const $refreshButton = $('<button class="btn btn-default"></button>').html('<i class="fa fa-refresh"></i> Refresh');
+        
+        // Style the add button with steel blue color
+        $addButton.css({
+            'background-color': '#4682b4',
+            'border-color': '#4682b4',
+            'color': 'white',
+            'font-weight': 'normal',
+            'border-radius': '4px',
+            'padding': '6px 12px'
+        });
+        
+        // Style the refresh button
+        $refreshButton.css({
+            'background-color': '#f8f9fa',
+            'border-color': '#dee2e6',
+            'color': '#333',
+            'font-weight': 'normal',
+            'border-radius': '4px',
+            'padding': '6px 12px'
+        });
+        
+        // Add hover effects
+        $addButton.hover(
+            function() { $(this).css('background-color', '#3a6d97'); },
+            function() { $(this).css('background-color', '#4682b4'); }
+        );
+        
+        $refreshButton.hover(
+            function() { $(this).css('background-color', '#e9ecef'); },
+            function() { $(this).css('background-color', '#f8f9fa'); }
+        );
+        
+        // Set click actions
+        $addButton.on('click', function() {
+            try {
+                frappe.new_doc('Patient');
+            } catch(e) {
+                console.error('Error creating new patient:', e);
+                window.location.href = '/app/patient/new';
+            }
+        });
+        
+        $refreshButton.on('click', function() {
+            try {
+                if (typeof cur_list !== 'undefined' && cur_list) {
+                    cur_list.refresh();
+                } else {
+                    location.reload();
+                }
+            } catch(e) {
+                console.error('Error refreshing:', e);
+                location.reload();
+            }
+        });
+        
+        // Add buttons to navbar
+        $navbar.append($addButton);
+        $navbar.append($refreshButton);
+        
+        // Add navbar directly to body for maximum visibility
+        $('body').append($navbar);
+    }
+    
+    // Function to check if we're on patient list page
+    function isPatientListPage() {
+        try {
+            // Check current URL
+            const url = window.location.href.toLowerCase();
+            
+            // Direct URL checks first
+            if (url.includes('/app/patient') && !url.includes('/patient/')) {
+                return true;
+            }
+            
+            if (url.includes('#list/patient')) {
+                return true;
+            }
+            
+            // Check page title
+            if ($('.page-title .title-text').length > 0) {
+                const pageTitle = $('.page-title .title-text').text().trim();
+                if (pageTitle === 'Patient') {
+                    return true;
+                }
+            }
+            
+            // Check route if frappe is available
+            if (typeof frappe !== 'undefined' && frappe.get_route) {
+                try {
+                    const route = frappe.get_route();
+                    if (Array.isArray(route) && route.length >= 2 && 
+                        route[0] === 'List' && route[1] === 'Patient') {
+                        return true;
+                    }
+                } catch(e) {
+                    console.warn('Error checking route:', e);
+                }
+            }
+            
+            return false;
+        } catch(e) {
+            console.error('Error in isPatientListPage:', e);
+            return false;
+        }
+    }
+    
+    // Check now and inject if needed
+    if (isPatientListPage()) {
+        createFixedNavbar();
+    }
+    
+    // Set up checks after document is ready
+    $(document).ready(function() {
+        // Check on document ready
+        if (isPatientListPage()) {
+            createFixedNavbar();
+        }
+        
+        // Check on route changes
+        $(document).on('route_change page_change hashchange', function() {
+            setTimeout(function() {
+                if (isPatientListPage()) {
+                    createFixedNavbar();
+                } else {
+                    $('.suma-direct-navbar').hide();
+                }
+            }, 300);
+        });
+        
+        // Periodic check
+        setInterval(function() {
+            if (isPatientListPage()) {
+                if ($('.suma-direct-navbar').length === 0) {
+                    createFixedNavbar();
+                } else {
+                    $('.suma-direct-navbar').show();
+                }
+            } else {
+                $('.suma-direct-navbar').hide();
+            }
+        }, 2000);
+    });
+})();
+</script>
+
+<!-- Fallback HTML buttons if JavaScript fails -->
+<style>
+.fallback-navbar {
+    position: fixed;
+    top: 72px;
+    right: 20px;
+    z-index: 10000;
+    display: none;
+}
+body[data-route*="List/Patient"] .fallback-navbar {
+    display: flex !important;
+}
+.fallback-navbar .btn-primary {
+    background-color: #4682b4;
+    border-color: #4682b4;
+}
+.fallback-navbar .btn-primary:hover {
+    background-color: #3a6d97;
+}
+</style>
+
+<div class="fallback-navbar">
+    <a href="/app/patient/new" class="btn btn-primary">Add Patient</a>
+    <button onclick="location.reload()" class="btn btn-default"><i class="fa fa-refresh"></i> Refresh</button>
+</div>

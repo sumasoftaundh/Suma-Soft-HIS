@@ -1,0 +1,69 @@
+/**
+ * Global CSS to hide all bell and plus icons in the Suma Health application
+ */
+
+/* Hide all bell icons in headers */
+.navbar .fa-bell,
+.navbar .fa-bell-o,
+.page-head .fa-bell,
+.page-head .fa-bell-o,
+.page-header .fa-bell,
+.page-header .fa-bell-o,
+header .fa-bell,
+header .fa-bell-o,
+.navbar-right .fa-bell,
+.navbar-right .fa-bell-o,
+.page-actions .fa-bell,
+.page-actions .fa-bell-o,
+[data-label="Notifications"] {
+    display: none !important;
+}
+
+/* Hide all plus icons in headers */
+.navbar .fa-plus,
+.page-head .fa-plus,
+.page-header .fa-plus,
+header .fa-plus,
+.navbar-right .fa-plus,
+.page-actions .fa-plus,
+[data-label="New"] {
+    display: none !important;
+}
+
+/* Hide notifications container if present */
+.navbar-right .dropdown.notifications-dropdown,
+#navbar-notifications,
+.navbar .notifications-icon,
+.page-head .notifications-icon,
+[data-navbar-default="notifications"] {
+    display: none !important;
+}
+
+/* Hide the notifications dropdown menu if present */
+.notifications-dropdown .dropdown-menu,
+.notifications-list,
+.notification-dropdown-list {
+    display: none !important;
+}
+
+/* Hide quick actions container if present */
+.navbar-right .dropdown.quick-actions-dropdown,
+#navbar-quick-actions,
+.navbar .quick-actions-icon,
+.page-head .quick-actions-icon,
+[data-navbar-default="quick_actions"] {
+    display: none !important;
+}
+
+/* Hide the quick actions dropdown menu if present */
+.quick-actions-dropdown .dropdown-menu,
+.quick-actions-list {
+    display: none !important;
+}
+
+/* Hide specific elements in Frappe core */
+.navbar [data-link-type="awesomebar-message"],
+.navbar-right .dropdown:has(.fa-bell),
+.navbar-right .dropdown:has(.fa-plus) {
+    display: none !important;
+}

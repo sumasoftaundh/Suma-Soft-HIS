@@ -1,0 +1,88 @@
+{
+  "cards": [
+    {
+      "hidden": 0,
+      "label": "Appointments",
+      "links": [
+        {
+          "dependencies": "",
+          "description": "Schedule and manage patient appointments",
+          "icon": "calendar",
+          "label": "Patient Appointment",
+          "name": "Patient Appointment",
+          "onboard": 0,
+          "type": "doctype"
+        },
+        {
+          "dependencies": "",
+          "description": "Appointment scheduling settings",
+          "icon": "setting",
+          "label": "Appointment Type",
+          "name": "Appointment Type",
+          "onboard": 0,
+          "type": "doctype"
+        },
+        {
+          "dependencies": "",
+          "description": "Healthcare practitioner schedule",
+          "icon": "note",
+          "label": "Practitioner Schedule",
+          "name": "Practitioner Schedule",
+          "onboard": 0,
+          "type": "doctype"
+        }
+      ]
+    }
+  ],
+  "category": "Modules",
+  "charts": [
+    {
+      "chart_name": "Appointment Status",
+      "label": "Appointment Status"
+    }
+  ],
+  "creation": "2025-07-17 05:45:00.000000",
+  "developer_mode_only": 0,
+  "disable_user_customization": 0,
+  "docstatus": 0,
+  "doctype": "Desk Page",
+  "extends_another_page": 0,
+  "hide_custom": 0,
+  "idx": 0,
+  "is_default": 0,
+  "is_standard": 1,
+  "label": "Appointments",
+  "modified": "2025-07-17 05:45:00.000000",
+  "modified_by": "Administrator",
+  "module": "Healthcare",
+  "name": "appointment",
+  "owner": "Administrator",
+  "pin_to_bottom": 0,
+  "pin_to_top": 0,
+  "shortcuts": [
+    {
+      "color": "Blue",
+      "format": "{} Open",
+      "label": "Patient Appointments",
+      "link_to": "Patient Appointment",
+      "stats_filter": "{\"status\":[\"=\",\"Open\"]}",
+      "type": "DocType"
+    },
+    {
+      "color": "Green",
+      "format": "{} Scheduled",
+      "label": "Scheduled Appointments",
+      "link_to": "Patient Appointment",
+      "stats_filter": "{\"status\":[\"=\",\"Scheduled\"]}",
+      "type": "DocType"
+    },
+    {
+      "color": "Orange",
+      "format": "{} Pending",
+      "label": "Pending Appointments",
+      "link_to": "Patient Appointment",
+      "stats_filter": "{\"status\":[\"=\",\"Pending\"]}",
+      "type": "DocType"
+    }
+  ]
+}

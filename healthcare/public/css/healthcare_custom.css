@@ -1,0 +1,150 @@
+/* Patient Portal Theme Variables */
+:root {
+    --background-color: #f5f7fa; /* Light grey background */
+    --panel-bg-color: #ffffff; /* White panel background */
+    --accent-color: #4682b4; /* Steel blue accent */
+    --text-color: #333333; /* Dark text */
+    --light-text: #ffffff; /* White text for dark backgrounds */
+    --border-color: #e2e8f0; /* Light border color */
+    --hover-bg: #f8fafb; /* Subtle hover background */
+}
+
+/* Global background color */
+body {
+    background-color: var(--background-color) !important;
+}
+
+/* Override white text with black for better visibility on pink backgrounds */
+body.desk-route {
+    color: #000000 !important;
+}
+
+/* Improved fix for sidebar collapse functionality */
+body:not(.no-sidebar) .layout-side-section {
+    transition: all 0.3s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Complete hide for sidebar when collapsed */
+body:not(.no-sidebar) .layout-side-section:not(:visible),
+body:not(.no-sidebar) .layout-side-section[style*="display: none"] {
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    position: absolute !important;
+    left: -9999px !important;
+    overflow: hidden !important;
+    height: 0 !important;
+    min-height: 0 !important;
+}
+
+/* Ensure all child elements are properly hidden */
+body:not(.no-sidebar) .layout-side-section:not(:visible) *,
+body:not(.no-sidebar) .layout-side-section[style*="display: none"] * {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    position: absolute !important;
+    overflow: hidden !important;
+}
+
+/* Fix for Suma Health, Website, Settings items specifically */
+body:not(.no-sidebar) .layout-side-section:not(:visible) .standard-sidebar-item,
+body:not(.no-sidebar) .layout-side-section[style*="display: none"] .standard-sidebar-item {
+    display: none !important;
+}
+
+/* Target white text specifically and make it black */
+body.desk-route .white-text,
+body.desk-route [style*="color: #ffffff"],
+body.desk-route [style*="color: white"] {
+    color: #000000 !important;
+}
+
+/* Remove right sidebar filter bar from all list pages */
+.list-sidebar {
+    display: none !important;
+}
+
+/* Expand the list view to take full width when sidebar is hidden */
+.layout-main-section-wrapper {
+    width: 100% !important;
+}
+
+/* Make sure the layout adjusts properly */
+.layout-main-section {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+}
+
+/* Ensure table takes full available width */
+.list-row-container {
+    width: 100% !important;
+    background-color: var(--panel-bg-color) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+    overflow: hidden !important;
+}
+
+/* Patient list styling - headers */
+.frappe-list[data-doctype="Patient"] .list-row-head {
+    background-color: var(--accent-color) !important;
+    color: var(--light-text) !important;
+    border-radius: 6px 6px 0 0 !important;
+    font-weight: 500 !important;
+}
+
+/* Patient list column styling */
+.frappe-list[data-doctype="Patient"] .list-row-head .list-subject,
+.frappe-list[data-doctype="Patient"] .list-row-head .level-item {
+    color: var(--light-text) !important;
+}
+
+/* Make Add Patient button match image */
+.primary-action, 
+[data-label="Add Patient"],
+.btn-primary {
+    background-color: var(--accent-color) !important;
+    border-color: var(--accent-color) !important;
+    color: var(--light-text) !important;
+    border-radius: 4px !important;
+    font-weight: 500 !important;
+}
+
+/* Filter area styling */
+.frappe-list[data-doctype="Patient"] .filter-list, 
+.frappe-list[data-doctype="Patient"] .filter-section, 
+.frappe-list[data-doctype="Patient"] .list-filters, 
+.frappe-list[data-doctype="Patient"] .list-filter-area {
+    background-color: var(--panel-bg-color) !important;
+    border-radius: 8px 8px 0 0 !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+    margin-bottom: 0 !important;
+    padding: 10px !important;
+}
+
+.page-container {
+    max-width: 100% !important;
+}
+
+/* Remove right sidebar from all form pages */
+.form-sidebar {
+    display: none !important;
+}
+
+/* Force Glass Effect on Navbar - High Specificity */
+body .navbar.navbar-light.website-navbar {
+    background: rgba(255, 255, 255, 0.75) !important; /* Glass effect */
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
+}

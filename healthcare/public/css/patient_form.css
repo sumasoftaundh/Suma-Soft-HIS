@@ -1,0 +1,103 @@
+/* Patient Form Layout Improvements - Making Demographics section full width */
+
+/* Target the patient demographics section specifically */
+body[data-route*="patient/new"] .section-head:contains("Patient Demographics"),
+body[data-route*="patient/edit"] .section-head:contains("Patient Demographics"),
+body[data-route*="Form/Patient"] .section-head:contains("Patient Demographics") {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Make the section container full width */
+body[data-route*="Form/Patient"] .form-section[data-fieldname="basic_info"],
+body[data-route*="patient/new"] .form-section[data-fieldname="basic_info"],
+body[data-route*="patient/edit"] .form-section[data-fieldname="basic_info"] {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Expand the form layout container */
+body[data-route*="Form/Patient"] .form-layout {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-right: 0 !important;
+}
+
+/* Make the form column layout adjust properly */
+body[data-route*="Form/Patient"] .form-column {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Improve field spacing for better display */
+body[data-route*="Form/Patient"] .frappe-control {
+    padding: 8px 12px;
+    width: 100%;
+    max-width: none !important;
+}
+
+/* Make sure the row layout is more flexible */
+body[data-route*="Form/Patient"] .row {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 0;
+}
+
+/* Set proper column widths for responsive layout */
+body[data-route*="Form/Patient"] .col-md-6 {
+    width: 50%;
+    flex: 0 0 50%;
+    max-width: 50% !important;
+}
+
+body[data-route*="Form/Patient"] .col-md-12 {
+    width: 100%;
+    flex: 0 0 100%;
+    max-width: 100% !important;
+}
+
+/* Full width form section for patient form */
+body[data-route*="Form/Patient"] .form-section {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Override any max-width constraints on the form container */
+body[data-route*="Form/Patient"] form,
+body[data-route*="Form/Patient"] .form-section-container,
+body[data-route*="Form/Patient"] .form-page {
+    width: 100% !important;
+    max-width: none !important;
+}
+
+/* Force form layout to be at least 95% of page width */
+body[data-route*="Form/Patient"] .form-layout {
+    width: 95% !important;
+    min-width: 95% !important;
+    margin: 0 auto !important;
+}
+
+/* Ensure the input fields use full available width */
+body[data-route*="Form/Patient"] .frappe-control input,
+body[data-route*="Form/Patient"] .frappe-control select,
+body[data-route*="Form/Patient"] .frappe-control textarea {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Enhance the container width for better spacing */
+body[data-route*="Form/Patient"] .container,
+body[data-route*="Form/Patient"] .container-fluid {
+    width: 100% !important;
+    padding: 0 15px !important;
+    max-width: none !important;
+}
+
+@media (max-width: 768px) {
+    body[data-route*="Form/Patient"] .col-md-6 {
+        width: 100%;
+        flex: 0 0 100%;
+        max-width: 100% !important;
+    }
+}

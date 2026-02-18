@@ -1,0 +1,82 @@
+<!-- Patient List Head Customizations -->
+<script src="/assets/healthcare/js/direct_patient_list_patch.js"></script>
+
+<script>
+// Immediate fix for patient list navbar
+(function() {
+    // Add direct navbar
+    function addDirectNavbar() {
+        // Only proceed on patient list page
+        if (!window.location.href.includes('/patient')) return;
+        
+        // Create buttons container
+        const navbar = document.createElement('div');
+        navbar.className = 'direct-patient-navbar';
+        navbar.style.cssText = 'position:fixed; top:72px; right:20px; z-index:10000; display:flex; gap:10px;';
+        
+        // Add Patient button
+        const addBtn = document.createElement('a');
+        addBtn.href = '/app/patient/new';
+        addBtn.className = 'btn btn-primary';
+        addBtn.innerHTML = 'Add Patient';
+        addBtn.style.cssText = 'background-color:#4682b4; border-color:#4682b4;';
+        
+        // Refresh button
+        const refreshBtn = document.createElement('button');
+        refreshBtn.className = 'btn btn-default';
+        refreshBtn.innerHTML = '<i class="fa fa-refresh"></i> Refresh';
+        refreshBtn.onclick = function() { location.reload(); };
+        
+        // Add buttons to navbar
+        navbar.appendChild(addBtn);
+        navbar.appendChild(refreshBtn);
+        
+        // Add to document
+        document.body.appendChild(navbar);
+    }
+    
+    // Try to run immediately
+    if (document.body) {
+        addDirectNavbar();
+    }
+    
+    // Also run when DOM is ready
+    document.addEventListener('DOMContentLoaded', addDirectNavbar);
+    
+    // And after a slight delay
+    setTimeout(addDirectNavbar, 1000);
+})();
+</script>
+
+<style>
+/* Ensure navbar visibility with CSS */
+.direct-patient-navbar {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Style navbar buttons */
+.direct-patient-navbar .btn-primary {
+    background-color: #4682b4 !important;
+    border-color: #4682b4 !important;
+    color: white !important;
+}
+
+.direct-patient-navbar .btn-primary:hover {
+    background-color: #3a6d97 !important;
+}
+
+/* Fix position when scrolling */
+.direct-patient-navbar.fixed {
+    position: fixed !important;
+    top: 72px !important;
+    right: 20px !important;
+    z-index: 10000 !important;
+}
+
+/* Hide in non-patient list pages */
+body:not([data-route*="List/Patient"]) .direct-patient-navbar {
+    display: none !important;
+}
+</style>

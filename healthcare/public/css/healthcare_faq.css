@@ -1,0 +1,83 @@
+/* Healthcare FAQ CSS */
+.healthcare-faq-container {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  margin: 20px 0;
+  overflow: hidden;
+}
+
+.faq-header {
+  background-color: #4682b4;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 6px 6px 0 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.faq-item {
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0;
+}
+
+.faq-question {
+  padding: 15px 20px;
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.faq-question:hover {
+  background-color: #f8fafb;
+}
+
+.faq-answer {
+  padding: 0 20px 15px;
+  color: #4a5568;
+}
+
+.faq-answer.hidden {
+  display: none;
+}
+
+/* Styling for the expand/collapse icon */
+.faq-icon {
+  font-size: 18px;
+  transition: transform 0.2s ease;
+}
+
+.faq-icon.expanded {
+  transform: rotate(180deg);
+}
+
+/* Category styling */
+.faq-category {
+  background-color: #f5f7fa;
+  padding: 10px 20px;
+  font-weight: 500;
+  color: #4682b4;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* Search box styling */
+.faq-search {
+  padding: 15px 20px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.faq-search input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+}
+
+/* No results message */
+.no-results {
+  padding: 20px;
+  text-align: center;
+  color: #718096;
+}

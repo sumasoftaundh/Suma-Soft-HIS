@@ -1,0 +1,46 @@
+/* Custom CSS to keep body-sidebar always collapsed */
+.body-sidebar-container.expanded {
+    /* Override the expanded class behavior */
+    width: fit-content !important;
+}
+
+.body-sidebar-container.expanded .body-sidebar {
+    /* Keep sidebar width narrow */
+    position: static !important;
+    width: 100px !important;
+    background: var(--subtle-accent);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.body-sidebar-container.expanded .body-sidebar .sidebar-item-label {
+    /* Hide labels when expanded to keep it collapsed */
+    display: none !important;
+}
+
+.body-sidebar-container.expanded .body-sidebar-placeholder {
+    /* Hide placeholder to prevent extra spacing */
+    display: none !important;
+}
+
+.body-sidebar-container.expanded .body-sidebar .sidebar-item-container {
+    width: 30px !important;
+}
+
+.body-sidebar-container.expanded .body-sidebar .sidebar-item-control {
+    display: none !important;
+}
+
+/* Color adjustments based on theme */
+.body-sidebar {
+    background: white;
+    border-right: 1px solid #e6e6e6;
+}
+
+.body-sidebar .standard-sidebar-item .item-anchor:hover {
+    background-color: #f5f7fa;
+}
+
+.body-sidebar .standard-sidebar-item .item-anchor.active-sidebar {
+    background-color: #4682b4;
+    color: white;
+}

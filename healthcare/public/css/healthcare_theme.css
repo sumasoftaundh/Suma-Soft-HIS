@@ -1,0 +1,200 @@
+/* Healthcare Theme CSS - Consistent Steel Blue Headers */
+
+/* Fixed Navbar Styling */
+html, body {
+    overflow-x: hidden;
+}
+
+/* Fixed header and navbar for all pages */
+.page-head {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1050 !important;
+    background-color: #4682b4 !important;
+    border-bottom: 1px solid #4682b4 !important;
+}
+
+/* Fix the tabs below the header */
+.page-container .page-tabs,
+.layout-main-section-wrapper .page-tabs,
+.page-form .page-tabs,
+body[data-route*="Form"] .page-tabs {
+    position: sticky !important;
+    top: 60px !important;
+    z-index: 1049 !important;
+    background-color: white !important;
+    border-bottom: 1px solid #e3e8f1 !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05) !important;
+    margin: 0 !important;
+    padding: 0 15px !important;
+}
+
+/* Ensure tabs stick even in forms */
+body[data-route*="Form"] .form-tabs-list,
+.frappe-form-tabs {
+    position: sticky !important;
+    top: 46px !important;
+    z-index: 1049 !important;
+    background-color: white !important;
+    margin-top: -3px !important;
+}
+
+/* Override Frappe's sticky behavior for form tabs */
+body[data-route*="Form"] .form-tabs-sticky-down {
+    top: 46px !important; /* Match the top value above */
+    position: fixed !important;
+    width: 100% !important;
+    z-index: 1049 !important;
+    background-color: white !important;
+}
+
+/* Ensure proper spacing for the form content when tabs are sticky */
+
+
+/* Full-width form container */
+.form-container {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-right: 0 !important;
+}
+
+/* Remove right-side space in layout main section */
+.layout-main-section {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+    flex: 1 1 100% !important;
+}
+
+/* Hide sidebar to maximize form space */
+.layout-side-section {
+    display: none !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    flex: 0 !important;
+}
+
+/* Ensure the page body expands to full width */
+.page-body {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Form container to full width */
+.form-page {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Layout main section wrapper to full width */
+.layout-main-section-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+    flex: 1 1 100% !important;
+}
+
+/* Selected tab styling */
+.navbar-default .navbar-nav > li > a.selected,
+.nav-tabs > li.active > a {
+    background-color: #4682b4 !important;
+    color: white !important;
+    font-weight: 500 !important;
+    border-bottom: 2px solid #4682b4 !important;
+}
+
+/* Form container adjustments */
+.form-layout {
+    /* padding-top: 10px !important; */
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-right: 0 !important;
+}
+
+/* Make sure the page container has proper layering */
+.page-container {
+    position: relative;
+    z-index: 1;
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-right: 0 !important;
+}
+
+/* Apply steel blue theme to all healthcare pages */
+.healthcare-page .page-head,
+.layout-main-section-wrapper .page-head,
+.page-container .page-head,
+.patient-progress .page-head,
+.patient-dashboard .page-head {
+    background-color: #4682b4 !important;
+    border-bottom: 1px solid #4682b4 !important;
+}
+
+/* Fix header text colors for visibility */
+.healthcare-page .page-head .title-text,
+.layout-main-section-wrapper .page-head .title-text,
+.page-container .page-head .title-text,
+.patient-progress .page-head .title-text,
+.patient-dashboard .page-head .title-text,
+.healthcare-page .page-head .sub-heading,
+.layout-main-section-wrapper .page-head .sub-heading,
+.page-container .page-head .sub-heading,
+.patient-progress .page-head .sub-heading,
+.patient-dashboard .page-head .sub-heading {
+    color: white !important;
+}
+
+/* Header action buttons - default styling preserved */
+
+/* Form views like patient form */
+body[data-route*="patient"] .page-head,
+body[data-route*="healthcare"] .page-head {
+    background-color: #4682b4 !important;
+    border-bottom: 1px solid #4682b4 !important;
+}
+
+body[data-route*="patient"] .page-head .title-text,
+body[data-route*="patient"] .page-head .sub-heading,
+body[data-route*="healthcare"] .page-head .title-text,
+body[data-route*="healthcare"] .page-head .sub-heading {
+    color: white !important;
+}
+
+body[data-route*="patient"] .page-head .page-actions *,
+body[data-route*="healthcare"] .page-head .page-actions * {
+    color: white !important;
+}
+
+/* Add steel blue styling to buttons */
+.btn-primary {
+    background-color: #4682b4 !important;
+    border-color: #4682b4 !important;
+}
+
+.btn-primary:hover {
+    background-color: #3a6d99 !important;
+    border-color: #3a6d99 !important;
+}
+
+/* Add healthcare custom styles for list views */
+.list-row-head {
+    background-color: #4682b4 !important;
+    color: white !important;
+}
+
+.list-row-head .level-left *,
+.list-row-head .level-right * {
+    color: white !important;
+}
+
+/* Style for patient dashboard */
+.patient-name-container {
+    background-color: #4682b4 !important;
+    color: white !important;
+    padding: 10px;
+    border-radius: 4px;
+}

@@ -1,0 +1,123 @@
+{
+ "charts": [],
+ "content": [
+  {
+   "type": "header",
+   "data": {
+    "text": "Appointments",
+    "level": 1,
+    "color": "#4682b4"
+   }
+  },
+  {
+   "type": "shortcut",
+   "data": {
+    "shortcut_name": "New Patient Appointment",
+    "count_label": "New",
+    "color": "#4682b4",
+    "link_to": "Patient Appointment,new-patient-appointment"
+   }
+  },
+  {
+   "type": "card",
+   "data": {
+    "card_name": "Appointment Management",
+    "color": "#4682b4",
+    "hidden": 0,
+    "items": [
+     {
+      "description": "Manage Patient Appointments",
+      "label": "Patient Appointment",
+      "link_to": "Patient Appointment",
+      "type": "DocType"
+     },
+     {
+      "description": "Schedule appointments for practitioners",
+      "label": "Practitioner Schedule",
+      "link_to": "Practitioner Schedule",
+      "type": "DocType"
+     },
+     {
+      "description": "Patient Appointment Analytics",
+      "label": "Appointment Analytics",
+      "link_to": "Patient Appointment Analytics",
+      "type": "Report"
+     }
+    ]
+   }
+  },
+  {
+   "type": "card",
+   "data": {
+    "card_name": "Patient Information",
+    "color": "#4682b4",
+    "hidden": 0,
+    "items": [
+     {
+      "description": "Patient master database",
+      "label": "Patient",
+      "link_to": "Patient",
+      "type": "DocType"
+     },
+     {
+      "description": "Patient appointment history",
+      "label": "Patient History",
+      "link_to": "Patient History",
+      "type": "DocType"
+     }
+    ]
+   }
+  }
+ ],
+ "creation": "2025-07-17 06:00:00.000000",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "calendar",
+ "idx": 0,
+ "is_hidden": 0,
+ "label": "Appointment",
+ "links": [],
+ "modified": "2025-07-17 06:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Healthcare",
+ "name": "Appointment",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "Healthcare",
+ "public": 1,
+ "restrict_to_domain": "Healthcare",
+ "roles": [
+  {
+   "role": "Healthcare Administrator"
+  },
+  {
+   "role": "Doctor"
+  },
+  {
+   "role": "Receptionist"
+  }
+ ],
+ "sequence_id": 1.0,
+ "shortcuts": [
+  {
+   "color": "#4682b4",
+   "format": "{} New",
+   "label": "New Appointment",
+   "link_to": "Patient Appointment",
+   "stats_filter": "{\"status\": \"Open\"}",
+   "type": "DocType"
+  },
+  {
+   "color": "#4682b4",
+   "format": "{} Today",
+   "label": "Todays Appointments",
+   "link_to": "Patient Appointment",
+   "stats_filter": "{\"appointment_date\": [\"=\", \"Today\"]}",
+   "type": "DocType"
+  }
+ ],
+ "title": "Appointment"
+}

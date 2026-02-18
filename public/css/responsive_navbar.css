@@ -1,0 +1,274 @@
+/* Responsive Navbar for Healthcare App 
+ * Using the steel blue theme from the Patient Portal
+ * Makes the navbar fully responsive across all device sizes
+ */
+
+/* Base navbar styling */
+.navbar {
+    background-color: #ffffff !important; /* White navbar */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    transition: all 0.3s ease;
+}
+
+/* Brand logo adjustments */
+.navbar-brand {
+    padding: 12px 15px;
+}
+
+.navbar-brand img {
+    max-height: 32px;
+    transition: all 0.3s ease;
+}
+
+/* Navbar items */
+.navbar-nav .nav-item {
+    margin: 0 2px;
+}
+
+.navbar-nav .nav-link {
+    color: #333333 !important;
+    padding: 12px 15px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    border-radius: 4px;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:focus {
+    color: #4682b4 !important; /* Steel blue on hover */
+    background-color: rgba(70, 130, 180, 0.05);
+}
+
+.navbar-nav .nav-link.active {
+    color: #4682b4 !important; /* Steel blue for active state */
+    font-weight: 600;
+}
+
+/* Dropdown menus */
+.dropdown-menu {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    padding: 8px 0;
+}
+
+.dropdown-item {
+    font-size: 14px;
+    padding: 8px 16px;
+    color: #333333;
+    transition: all 0.2s ease;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+    background-color: rgba(70, 130, 180, 0.05);
+    color: #4682b4 !important;
+}
+
+/* Search bar and icon adjustments */
+.navbar .form-inline .form-control {
+    border-radius: 20px;
+    border: 1px solid #e2e8f0;
+    font-size: 14px;
+    padding: 0.375rem 1rem;
+}
+
+/* Toggle button for mobile */
+.navbar-toggler {
+    border: none;
+    padding: 8px;
+    margin-right: 15px;
+    background-color: transparent !important;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+/* Navbar toggler icon */
+.navbar-toggler .navbar-toggler-icon {
+    background-image: none !important;
+    position: relative;
+    width: 24px;
+    height: 24px;
+}
+
+.navbar-toggler .navbar-toggler-icon:before,
+.navbar-toggler .navbar-toggler-icon:after,
+.navbar-toggler .navbar-toggler-icon span {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #4682b4;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.navbar-toggler .navbar-toggler-icon:before {
+    top: 0;
+}
+
+.navbar-toggler .navbar-toggler-icon span {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.navbar-toggler .navbar-toggler-icon:after {
+    bottom: 0;
+}
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:before {
+    transform: translateY(10px) rotate(45deg);
+}
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon span {
+    opacity: 0;
+}
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:after {
+    transform: translateY(-10px) rotate(-45deg);
+}
+
+/* User avatar adjustments */
+.navbar .avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Notification icons */
+.navbar .dropdown-toggle .fa,
+.navbar .dropdown-toggle .fas {
+    color: #4682b4;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 991px) {
+    /* Fullscreen overlay for mobile menu */
+    .navbar-collapse {
+        position: fixed;
+        top: 56px; /* Height of the navbar */
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: white;
+        z-index: 1030;
+        padding: 15px;
+        overflow-y: auto;
+        transition: transform 0.3s ease;
+        transform: translateX(-100%);
+    }
+
+    .navbar-collapse.show {
+        transform: translateX(0);
+    }
+    
+    /* Stacked navbar items on mobile */
+    .navbar-nav .nav-item {
+        margin: 5px 0;
+    }
+    
+    .navbar-nav .nav-link {
+        padding: 12px 20px;
+        border-radius: 8px;
+    }
+    
+    /* Full width search bar on mobile */
+    .navbar .form-inline {
+        width: 100%;
+        margin: 10px 0;
+    }
+    
+    .navbar .form-inline .form-control {
+        width: 100%;
+    }
+    
+    /* Dropdown styling for mobile */
+    .dropdown-menu {
+        box-shadow: none;
+        background-color: rgba(70, 130, 180, 0.05);
+        margin: 0;
+        padding: 0;
+        border-radius: 8px;
+    }
+    
+    .dropdown-item {
+        padding: 10px 30px;
+    }
+    
+    /* User avatar container */
+    .navbar .dropdown.user-menu {
+        border-top: 1px solid #e2e8f0;
+        margin-top: 10px;
+        padding-top: 10px;
+    }
+    
+    /* Brand logo adjustments for mobile */
+    .navbar-brand {
+        margin-right: auto;
+    }
+    
+    .navbar-brand img {
+        max-height: 28px;
+    }
+}
+
+/* Small mobile devices */
+@media (max-width: 576px) {
+    .navbar {
+        padding: 5px 10px;
+    }
+    
+    .navbar-brand {
+        padding: 8px 10px;
+    }
+    
+    .navbar-brand img {
+        max-height: 24px;
+    }
+    
+    /* Stacked navbar items on mobile */
+    .navbar-nav .nav-item {
+        margin: 3px 0;
+    }
+    
+    .navbar-nav .nav-link {
+        padding: 10px 15px;
+    }
+}
+
+/* Dark mode support for future use */
+@media (prefers-color-scheme: dark) {
+    .navbar.navbar-dark {
+        background-color: #2d3748 !important;
+    }
+    
+    .navbar.navbar-dark .nav-link {
+        color: #e2e8f0 !important;
+    }
+    
+    .navbar.navbar-dark .nav-link:hover,
+    .navbar.navbar-dark .nav-link:focus {
+        color: #ffffff !important;
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+    
+    .navbar.navbar-dark .dropdown-menu {
+        background-color: #2d3748;
+    }
+    
+    .navbar.navbar-dark .dropdown-item {
+        color: #e2e8f0;
+    }
+    
+    .navbar.navbar-dark .dropdown-item:hover,
+    .navbar.navbar-dark .dropdown-item:focus {
+        background-color: rgba(255, 255, 255, 0.05);
+        color: #ffffff !important;
+    }
+}

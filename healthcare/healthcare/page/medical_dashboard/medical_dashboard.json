@@ -1,0 +1,22 @@
+{
+ "content": null,
+ "creation": "2025-07-13 22:44:36.372873",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2025-07-13 22:44:36.372873",
+ "modified_by": "Administrator",
+ "module": "Healthcare",
+ "name": "medical_dashboard",
+ "owner": "Administrator",
+ "page_name": "medical_dashboard",
+ "roles": [
+  {
+   "role": "Pharmacist"
+  }
+ ],
+ "standard": "Yes",
+ "script": "medical_dashboard.js",
+ "style": "medical_dashboard.css",
+ "system_page": 0
+}

@@ -1,0 +1,17 @@
+/* Custom styles for dropdown menu */
+.navbar .dropdown-menu {
+    background-color: yellow !important;
+}
+
+.navbar .dropdown-menu .dropdown-item {
+    color: #333 !important;
+}
+
+.navbar .dropdown-menu .dropdown-item:hover {
+    background-color: #ffeb3b !important;
+    color: #000 !important;
+}
+
+.navbar .dropdown-divider {
+    border-top: 1px solid #ddd !important;
+}

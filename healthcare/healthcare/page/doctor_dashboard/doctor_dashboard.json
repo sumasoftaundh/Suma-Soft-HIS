@@ -1,0 +1,22 @@
+{
+ "content": null,
+ "creation": "2025-07-16 03:52:28.699533",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2025-07-16 03:52:28.699533",
+ "modified_by": "Administrator",
+ "module": "Healthcare",
+ "name": "doctor_dashboard",
+ "owner": "Administrator",
+ "page_name": "doctor_dashboard",
+ "roles": [
+  {
+   "role": "Doctor"
+  }
+ ],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0
+}

@@ -1,0 +1,2 @@
+__version__ = "16.0.0-dev"
+from . import barcode

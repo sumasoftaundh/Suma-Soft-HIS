@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Frequently Asked Questions - Healthcare Portal">
+    <title>FAQ - Healthcare Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+<body class="bg-light">
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="bg-white">
+            <div class="sidebar-header">
+                <h3>Menu</h3>
+            </div>
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="#"><i class="fas fa-home"></i> Dashboard</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fas fa-calendar"></i> Appointments</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fas fa-user-md"></i> Doctors</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fas fa-question-circle"></i> FAQ</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content -->
+        <div id="content">
+            <!-- Top Navigation -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn btn-info">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="ms-auto d-flex align-items-center">
+                        <div class="input-group search-bar">
+                            <input type="text" class="form-control" placeholder="Search...">
+                            <button class="btn btn-outline-secondary" type="button">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <div class="dropdown ms-3">
+                            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user-circle"></i> User
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <div class="container my-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <!-- Page Header -->
+                        <div class="page-header mb-4">
+                            <h1 class="page-title text-pink">Frequently Asked Questions</h1>
+                            <p class="text-muted">Find answers to common questions about our healthcare services and procedures.</p>
+                        </div>
+
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body p-0">
+                                <!-- Search and Filter Section -->
+                                <div class="p-4 border-bottom">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-6 mb-3 mb-md-0">
+                                            <div class="input-group">
+                                                <span class="input-group-text bg-white border-end-0">
+                                                    <i class="fas fa-search text-muted"></i>
+                                                </span>
+                                                <input type="text" 
+                                                       class="form-control border-start-0" 
+                                                       id="faqSearch" 
+                                                       placeholder="Search questions..."
+                                                       aria-label="Search questions">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="d-flex flex-wrap gap-2 justify-content-md-end">
+                                                <button type="button" 
+                                                        class="btn btn-sm btn-outline-pill btn-outline-primary active" 
+                                                        data-filter="all">
+                                                    All
+                                                </button>
+                                                <button type="button" 
+                                                        class="btn btn-sm btn-outline-pill btn-outline-primary" 
+                                                        data-filter="patient">
+                                                    <i class="fas fa-user me-1"></i> Patient
+                                                </button>
+                                                <button type="button" 
+                                                        class="btn btn-sm btn-outline-pill btn-outline-primary" 
+                                                        data-filter="appointment">
+                                                    <i class="fas fa-calendar-alt me-1"></i> Appointment
+                                                </button>
+                                                <button type="button" 
+                                                        class="btn btn-sm btn-outline-pill btn-outline-primary" 
+                                                        data-filter="billing">
+                                                    <i class="fas fa-credit-card me-1"></i> Billing
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FAQ Items -->
+                                <div class="faq-item" data-category="patient">
+                                    <div class="faq-question">
+                                        <span class="plus-icon">+</span>
+                                        <span>How do I register a new patient?</span>
+                                    </div>
+                                    <div class="faq-answer">
+                                        <p>To register a new patient in our system, please follow these steps:</p>
+                                        <ol>
+                                            <li>Navigate to the 'Patients' section in the main menu</li>
+                                            <li>Click the 'New Patient' button in the top-right corner</li>
+                                            <li>Fill in all required fields (marked with an asterisk *)</li>
+                                            <li>Upload any necessary documents (ID, insurance card, etc.)</li>
+                                            <li>Review the information and click 'Save'</li>
+                                        </ol>
+                                        <p class="mt-3 mb-0"><strong>Note:</strong> All new patient registrations require verification of insurance and photo ID.</p>
+                                    </div>
+                                </div>
+
+                                <div class="faq-item" data-category="appointment">
+                                    <div class="faq-question">
+                                        <span class="plus-icon">+</span>
+                                        <span>How do I schedule an appointment for a patient?</span>
+                                    </div>
+                                    <div class="faq-answer">
+                                        <p>To schedule a new appointment:</p>
+                                        <ol>
+                                            <li>Go to the 'Appointments' section</li>
+                                            <li>Click 'New Appointment'</li>
+                                            <li>Select the patient from the dropdown or search by name/ID</li>
+                                            <li>Choose the provider, date, and time</li>
+                                            <li>Select the appointment type and reason</li>
+                                            <li>Add any special notes if needed</li>
+                                            <li>Click 'Schedule' to confirm</li>
+                                        </ol>
+                                        <p class="mt-3"><strong>Tip:</strong> Use the calendar view to see provider availability in real-time.</p>
+                                    </div>
+                                </div>
+
+                                <div class="faq-item" data-category="billing">
+                                    <div class="faq-question">
+                                        <span class="plus-icon">+</span>
+                                        <span>How do I process an insurance claim?</span>
+                                    </div>
+                                    <div class="faq-answer">
+                                        <p>To process an insurance claim:</p>
+                                        <ol>
+                                            <li>Navigate to the patient's billing section</li>
+                                            <li>Select 'New Claim'</li>
+                                            <li>Verify the patient's insurance information</li>
+                                            <li>Enter the procedure codes and diagnosis codes</li>
+                                            <li>Attach any required documentation</li>
+                                            <li>Review and submit the claim</li>
+                                        </ol>
+                                        <p class="mt-3"><strong>Note:</strong> Claims are typically processed within 7-10 business days.</p>
+                                    </div>
+                                </div>
+
+                                <div class="faq-item" data-category="patient">
+                                    <div class="faq-question">
+                                        <span class="plus-icon">+</span>
+                                        <span>What information do I need to update a patient's record?</span>
+                                    </div>
+                                    <div class="faq-answer">
+                                        <p>When updating a patient's record, you may need:</p>
+                                        <ul>
+                                            <li>Current contact information (phone, email, address)</li>
+                                            <li>Insurance details (policy number, group number)</li>
+                                            <li>Emergency contact information</li>
+                                            <li>Medical history updates</li>
+                                            <li>Current medications and allergies</li>
+                                        </ul>
+                                        <p class="mt-3"><strong>Important:</strong> Always verify the patient's identity before making updates.</p>
+                                    </div>
+                                </div>
+
+                                <div class="faq-item" data-category="appointment">
+                                    <div class="faq-question">
+                                        <span class="plus-icon">+</span>
+                                        <span>How do I reschedule or cancel an appointment?</span>
+                                    </div>
+                                    <div class="faq-answer">
+                                        <p>To reschedule or cancel an appointment:</p>
+                                        <ol>
+                                            <li>Locate the appointment in the calendar view</li>
+                                            <li>Click on the appointment to open details</li>
+                                            <li>Select 'Reschedule' or 'Cancel'</li>
+                                            <li>If rescheduling, choose a new date and time</li>
+                                            <li>Add a reason for cancellation if required</li>
+                                            <li>Confirm the changes</li>
+                                        </ol>
+                                        <p class="mt-3"><strong>Note:</strong> Please notify patients of any cancellation policies at the time of scheduling.</p>
+                                    </div>
+                                </div>
+
+                                <div class="faq-item" data-category="billing">
+                                    <div class="faq-question">
+                                        <span class="plus-icon">+</span>
+                                        <span>What payment methods do you accept?</span>
+                                    </div>
+                                    <div class="faq-answer">
+                                        <p>We accept various payment methods for your convenience:</p>
+                                        <ul>
+                                            <li>Credit/Debit Cards (Visa, MasterCard, American Express, Discover)</li>
+                                            <li>Health Savings Account (HSA) cards</li>
+                                            <li>Personal checks</li>
+                                            <li>Cash</li>
+                                            <li>Mobile payments (Apple Pay, Google Pay)</li>
+                                        </ul>
+                                        <p class="mt-3"><strong>Note:</strong> Payment is due at the time of service unless prior arrangements have been made.</p>
+                                    </div>
+                                </div>
+
+                                <div class="faq-item" data-category="emergency">
+                                    <div class="faq-question">
+                                        <span class="plus-icon">+</span>
+                                        <span>What should I do in case of a medical emergency?</span>
+                                    </div>
+                                    <div class="faq-answer">
+                                        <p>In case of a medical emergency:</p>
+                                        <ol>
+                                            <li>Call emergency services (911) immediately</li>
+                                            <li>Notify the front desk or nearest staff member</li>
+                                            <li>Provide first aid if trained to do so</li>
+                                            <li>Gather the patient's medical information if available</li>
+                                            <li>Escort emergency personnel to the patient when they arrive</li>
+                                        </ol>
+                                        <p class="mt-3"><strong>Important:</strong> Never attempt to move a seriously injured person unless absolutely necessary for their safety.</p>
+                                    </div>
+                                </div>
+
+                                <div class="faq-item" data-category="billing">
+                                    <div class="faq-question">
+                                        <span class="plus-icon">+</span>
+                                        <span>How do I verify a patient's insurance?</span>
+                                    </div>
+                                    <div class="faq-answer">
+                                        <p>To verify a patient's insurance:</p>
+                                        <ol>
+                                            <li>Go to the patient's profile</li>
+                                            <li>Select the 'Insurance' tab</li>
+                                            <li>Click 'Verify Insurance'</li>
+                                            <li>Enter the required information (member ID, group number, etc.)</li>
+                                            <li>Click 'Verify' to check coverage</li>
+                                        </ol>
+                                        <p class="mt-3"><strong>Note:</strong> Always verify insurance eligibility before the patient's appointment to avoid billing issues.</p>
+                                    </div>
+                                </div>
+
+                                <div class="faq-item" data-category="patient">
+                                    <div class="faq-question">
+                                        <span class="plus-icon">+</span>
+                                        <span>How do I access a patient's medical records?</span>
+                                    </div>
+                                    <div class="faq-answer">
+                                        <p>To access a patient's medical records:</p>
+                                        <ol>
+                                            <li>Navigate to the 'Patients' section</li>
+                                            <li>Search for the patient by name or ID</li>
+                                            <li>Click on the patient's name to open their profile</li>
+                                            <li>Select 'Medical Records' from the sidebar</li>
+                                            <li>Choose the type of records you need to view</li>
+                                        </ol>
+                                        <p class="mt-3"><strong>Note:</strong> Access to medical records is restricted based on your user role and permissions to ensure patient confidentiality.</p>
+                                    </div>
+                                </div>
+
+                                <div class="faq-item" data-category="prescription">
+                                    <div class="faq-question">
+                                        <span class="plus-icon">+</span>
+                                        <span>How do I process a prescription refill request?</span>
+                                    </div>
+                                    <div class="faq-answer">
+                                        <p>To process a prescription refill request:</p>
+                                        <ol>
+                                            <li>Navigate to the 'Prescriptions' section</li>
+                                            <li>Select the patient's name</li>
+                                            <li>Choose the medication that needs a refill</li>
+                                            <li>Verify the prescription details (dosage, quantity, refills remaining)</li>
+                                            <li>Select the preferred pharmacy or choose to print the prescription</li>
+                                            <li>Click 'Submit' to process the refill</li>
+                                        </ol>
+                                        <p class="mt-3"><strong>Note:</strong> Please allow 24-48 hours for prescription refills to be processed.</p>
+                                    </div>
+                                </div>
+
+                                <div class="faq-item" data-category="billing">
+                                    <div class="faq-question">
+                                        <span class="plus-icon">+</span>
+                                        <span>How can I check a patient's billing history?</span>
+                                    </div>
+                                    <div class="faq-answer">
+                                        <p>To view a patient's billing history:</p>
+                                        <ol>
+                                            <li>Go to the 'Billing' section</li>
+                                            <li>Search for the patient by name or account number</li>
+                                            <li>Click on 'Billing History'</li>
+                                            <li>Filter by date range, status, or amount if needed</li>
+                                            <li>Click on any entry to view detailed information</li>
+                                        </ol>
+                                        <p class="mt-3"><strong>Tip:</strong> You can print statements or export the data for record-keeping.</p>
+                                    </div>
+                                </div>
+
+                                <div class="faq-item" data-category="emergency">
+                                    <div class="faq-question">
+                                        <span class="plus-icon">+</span>
+                                        <span>What are the emergency protocols for the reception area?</span>
+                                    </div>
+                                    <div class="faq-answer">
+                                        <p>In case of an emergency in the reception area:</p>
+                                        <ol>
+                                            <li>Remain calm and assess the situation</li>
+                                            <li>If medical attention is needed, call the emergency extension (or 911 if external help is required)</li>
+                                            <li>Alert the nearest healthcare provider</li>
+                                            <li>Clear the area if necessary for emergency personnel</li>
+                                            <li>Follow the instructions of the healthcare provider or emergency personnel</li>
+                                            <li>Document the incident according to facility policy</li>
+                                        </ol>
+                                        <p class="mt-3"><strong>Important:</strong> Emergency contact numbers and protocols are posted at each reception desk.</p>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+
+            $('.faq-question').on('click', function() {
+                $(this).find('.plus-icon').text(function(_, text) {
+                    return text === '+' ? '−' : '+';
+                });
+                // Here you would typically toggle the answer content
+            });
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/healthcare/public/js/faq.js"></script>
+    <script>
+        // Initialize tooltips
+        $(function () {
+            $('[data-bs-toggle="tooltip"]').tooltip()
+        });
+
+        // Search functionality
+        $('#faqSearch').on('keyup', function() {
+            const searchText = $(this).val().toLowerCase();
+            $('.faq-item').each(function() {
+                const text = $(this).text().toLowerCase();
+                $(this).toggle(text.includes(searchText));
+            });
+        });
+
+        // Filter functionality
+        $('[data-filter]').on('click', function() {
+            const filter = $(this).data('filter');
+            
+            // Update active state
+            $('[data-filter]').removeClass('active');
+            $(this).addClass('active');
+            
+            // Show/hide items
+            if (filter === 'all') {
+                $('.faq-item').show();
+            } else {
+                $('.faq-item').hide();
+                $(`.faq-item[data-category="${filter}"]`).show();
+            }
+        });
+    </script>
+    
+    <footer class="footer mt-5 py-3 bg-white border-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <span class="text-muted">© 2023 Healthcare Portal. All rights reserved.</span>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="/contact" class="text-decoration-none me-3">Contact Support</a>
+                    <a href="/privacy" class="text-decoration-none me-3">Privacy Policy</a>
+                    <a href="/terms" class="text-decoration-none">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

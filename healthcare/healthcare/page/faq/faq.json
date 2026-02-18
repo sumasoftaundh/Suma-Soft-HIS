@@ -1,0 +1,18 @@
+{
+ "creation": "2025-07-03 12:05:00.123456",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2025-07-03 12:05:00.123456",
+ "modified_by": "Administrator",
+ "module": "Healthcare",
+ "name": "faq",
+ "owner": "Administrator",
+ "page_name": "faq",
+ "roles": [],
+ "script": "faq.js",
+ "style": "faq.css",
+ "standard": "Yes",
+ "template": "faq.html",
+ "title": "Frequently Asked Questions"
+}

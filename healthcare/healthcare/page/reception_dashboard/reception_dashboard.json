@@ -1,0 +1,22 @@
+{
+ "content": null,
+ "creation": "2025-07-10 01:17:31.289105",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2025-07-10 01:17:31.289105",
+ "modified_by": "Administrator",
+ "module": "Healthcare",
+ "name": "reception-dashboard",
+ "owner": "Administrator",
+ "page_name": "reception-dashboard",
+ "roles": [
+  {
+   "role": "Receptionist"
+  }
+ ],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0
+}

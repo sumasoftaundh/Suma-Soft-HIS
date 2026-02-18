@@ -1,0 +1,57 @@
+/* Patient Portal Theme - Global Variables */
+:root {
+    --background-color: #f5f7fa; /* Light grey background */
+    --panel-bg-color: #ffffff; /* White panel background */
+    --accent-color: #4682b4; /* Steel blue accent */
+    --text-color: #333333; /* Dark text */
+    --light-text: #ffffff; /* White text for dark backgrounds */
+    --border-color: #e2e8f0; /* Light border color */
+    --hover-bg: #f8fafb; /* Subtle hover background */
+}
+
+/* Patient List View Styles */
+
+.list-row-head {
+    background-color: var(--accent-color) !important;
+    color: var(--light-text) !important;
+}
+
+.list-row-head .list-col-checkbox, .list-row-head .list-col-actions {
+    background-color: var(--accent-color) !important;
+}
+
+.list-row-head .list-col-checkbox, .list-row-head .list-col-actions {
+    border-color: var(--accent-color) !important;
+}
+
+.list-row-head .list-subject {
+    color: var(--light-text) !important;
+}
+
+.list-filter-area {
+    background-color: var(--panel-bg-color) !important;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.favorite-icon {
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--red-500); /* Red for favorited */
+}
+
+.favorite-icon.fa-heart-o {
+    color: var(--gray-500); /* Grey for not favorited */
+}
+
+.list-row {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.list-row:hover {
+    background-color: var(--hover-bg);
+}
+
+/* Apply background color to body */
+body {
+    background-color: var(--background-color) !important;
+}

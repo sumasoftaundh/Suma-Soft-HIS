@@ -1,0 +1,54 @@
+.healthcare-faq-container {
+    max-width: 900px;
+    margin: auto;
+}
+.faq-item {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+.faq-question {
+    padding: 15px 20px;
+    cursor: pointer;
+    background-color: #f9f9f9;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.faq-question.active {
+    background-color: #f0f0f0;
+}
+.faq-answer {
+    padding: 20px;
+    background-color: #fff;
+    display: none;
+}
+.faq-answer.show {
+    display: block;
+}
+.faq-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    margin-right: 10px;
+    font-weight: 500;
+}
+.faq-tag.appointments {
+    background-color: #e0f7fa;
+    color: #00796b;
+}
+.faq-tag.billing {
+    background-color: #fff3e0;
+    color: #ef6c00;
+}
+.faq-tag.medical {
+    background-color: #ffe0e0;
+    color: #e74c3c;
+}
+.faq-tag.system {
+    background-color: #f0e0ff;
+    color: #9b59b6;
+}

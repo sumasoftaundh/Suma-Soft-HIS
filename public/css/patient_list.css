@@ -1,0 +1,227 @@
+/* Patient List Page Styling - Based on Patient Portal Theme */
+
+/* Theme Variables */
+:root {
+  --background-color: #f5f7fa; /* Light grey background from image */
+  --panel-bg-color: #ffffff; /* White panel background */
+  --accent-color: #2e62ac; /* Steel blue accent from image */
+  --text-color: #333333; /* Dark text */
+  --light-text: #ffffff; /* White text for dark backgrounds */
+  --border-color: #e2e8f0; /* Light border color */
+  --hover-bg: #f8fafb; /* Subtle hover background */
+}
+
+/* Override any theme-related vars from the system */
+body[data-route="List/Patient/List"] {
+  --primary-color: var(--accent-color) !important;
+  --btn-primary: var(--accent-color) !important;
+}
+
+/* General background color */
+body,
+body[data-route="List/Patient/List"] {
+  background-color: var(--background-color) !important; /* Light grey background from image */
+}
+
+/* Make sure the page and all containers have correct background */
+.page-container,
+.container,
+.layout-main-section-wrapper,
+.layout-main-section {
+  background-color: var(--background-color) !important;
+}
+
+/* Remove right sidebar and expand patient list width */
+.page-container {
+  width: 100% !important;
+}
+
+.layout-main-section {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.layout-side-section {
+  display: none !important;
+}
+
+/* Patient List Header (title area) */
+.page-head {
+  border-bottom: 1px solid var(--border-color) !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03) !important;
+  background-color: var(--panel-bg-color) !important;
+}
+
+/* Style the title area to match the image */
+.page-title,
+.title-text {
+  color: #333333 !important;
+}
+
+/* List view styling */
+.list-row-head {
+  background-color: #2e62ac !important; /* Steel blue header from image */
+  color: #ffffff !important;
+  border-radius: 6px 6px 0 0 !important;
+  font-weight: 500 !important;
+}
+
+/* Override any theming that might affect the header */
+body .list-row-head,
+.frappe-list .list-row-head,
+body[data-route="List/Patient/List"] .list-row-head {
+  background-color: #2e62ac !important;
+}
+
+/* Make header text white */
+.list-row-head .list-subject,
+.list-row-head .level-item,
+.list-row-head .list-col,
+.list-row-head .checkbox-actions {
+  color: var(--light-text) !important;
+}
+
+.list-row-container {
+  background-color: var(--panel-bg-color) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+  margin-bottom: 15px !important;
+  overflow: hidden !important;
+}
+
+/* Make the list view wider by removing standard padding */
+.frappe-list {
+  padding: 0 10px !important;
+  margin: 0 -15px !important;
+}
+
+/* List rows */
+.list-row {
+  border-bottom: 1px solid var(--border-color) !important;
+  transition: background-color 0.2s !important;
+}
+
+.list-row:last-child {
+  border-bottom: none !important;
+}
+
+.list-row:hover {
+  background-color: var(--hover-bg) !important;
+}
+
+/* Filter and search area */
+.filter-list, .filter-section, .list-filters, .list-filter-area {
+  background-color: var(--panel-bg-color) !important;
+  border-radius: 8px 8px 0 0 !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+  margin-bottom: 0 !important;
+  padding: 10px !important;
+}
+
+/* Input fields */
+.form-control {
+  border-radius: 4px !important;
+  border: 1px solid var(--border-color) !important;
+  background-color: var(--panel-bg-color) !important;
+}
+
+/* Primary action buttons */
+.btn-primary, button.btn-primary, a.btn-primary {
+  background-color: var(--accent-color) !important; /* Steel blue from image */
+  border-color: var(--accent-color) !important;
+  border-radius: 4px !important;
+  color: var(--light-text) !important;
+  box-shadow: none !important;
+}
+
+/* Add button styling - for the exact button shown in image */
+.page-actions .btn-primary, 
+.primary-action, 
+button[data-label="Add Patient"],
+a[data-label="Add Patient"],
+button.btn.btn-primary.btn-sm.add-patient-button,
+.btn:has(span:contains("Add Patient")),
+.layout-main-section a.btn-primary,
+a.btn-primary.add-patient-button,
+.btn.btn-primary.ellipsis,
+.page-head .btn-primary {
+  background-color: #2e62ac !important;
+  border-color: #2e62ac !important;
+  border-radius: 4px !important;
+  padding: 6px 12px !important;
+  color: #ffffff !important;
+  font-weight: 500 !important;
+  box-shadow: none !important;
+}
+
+/* Style button exactly as shown in the image */
+.page-head .btn-primary {
+  float: right;
+  margin-top: 4px;
+}
+
+/* Override standard Frappe button styling for Add Patient button */
+.standard-actions .btn-primary {
+  background-color: #2e62ac !important;
+  color: #ffffff !important;
+}
+
+/* Pagination */
+.list-paging-area {
+  border-radius: 0 0 8px 8px !important;
+  background-color: var(--panel-bg-color) !important;
+  padding: 10px !important;
+}
+
+/* Table header and columns styling */
+.list-col {
+  padding: 12px 8px !important;
+}
+
+/* Add favorite icon color */
+.like-action {
+  color: var(--accent-color) !important;
+}
+
+/* Filter buttons */
+.filter-button {
+  background-color: var(--panel-bg-color) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 4px !important;
+}
+
+/* Navbar styling */
+.navbar {
+  background-color: var(--panel-bg-color) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+/* Sidebar styling */
+.standard-sidebar {
+  background-color: var(--panel-bg-color) !important;
+}
+
+/* Make sure the patient ID rows have proper alignment */
+.unique-patient-id-column {
+  font-weight: 500 !important;
+}
+
+/* Style the row checkboxes to be visible */
+.list-row-checkbox {
+  margin-right: 8px !important;
+}
+
+/* Fixing any layout issues in the image */
+.list-row .col {
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Custom styles for the heart icons in the last column */
+.like-action.icon-btn {
+  color: #d3d3d3 !important;
+}
+
+.like-action.icon-btn.liked {
+  color: #ff5858 !important;
+}

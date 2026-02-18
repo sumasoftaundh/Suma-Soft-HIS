@@ -1,0 +1,69 @@
+/* Patient List CSS */
+.patient-list-container {
+  background-color: #f5f7fa;
+  border-radius: 8px;
+  margin: 0;
+  padding: 0;
+}
+
+.patient-list-header {
+  background-color: #4682b4;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 6px 6px 0 0;
+}
+
+.patient-list-row {
+  border-bottom: 1px solid #e2e8f0;
+  padding: 8px 15px;
+  background-color: white;
+}
+
+.patient-list-row:hover {
+  background-color: #f8fafb;
+}
+
+.patient-list-row:last-child {
+  border-bottom: none;
+  border-radius: 0 0 6px 6px;
+}
+
+.add-patient-btn {
+  background-color: #4682b4;
+  border-color: #4682b4;
+  color: white;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.add-patient-btn:hover {
+  background-color: #3a6d96;
+  border-color: #3a6d96;
+}
+
+/* Ensure list takes up full width */
+.layout-main-section-wrapper {
+  width: 100%;
+  max-width: 100%;
+}
+
+.list-renderer-wrapper {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Override the body class */
+body.no-list-sidebar .layout-side-section {
+  display: none;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .patient-list-container {
+    border-radius: 0;
+  }
+  
+  .filter-section {
+    flex-direction: column;
+  }
+}

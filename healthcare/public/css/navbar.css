@@ -1,0 +1,39 @@
+/* FAQ Icon Styling */
+.nav-link[href="/faq"] {
+    color: var(--primary) !important; /* Use theme's primary color */
+    font-weight: 600;
+    margin: 0 5px;
+    padding: 8px 12px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.nav-link[href="/faq"]:hover {
+    text-decoration: none;
+}
+
+.nav-link[href="/faq"] .icon {
+    margin-right: 5px;
+}
+
+/* Ensure the icon is properly sized */
+.nav-link[href="/faq"] .icon-help {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+}
+
+/* Add some spacing between the icon and text on larger screens */
+@media (min-width: 768px) {
+    .nav-link[href="/faq"] .icon {
+        margin-right: 8px;
+    }
+}
+
+/* Style for when FAQ is in the mobile menu */
+.navbar-collapse .nav-link[href="/faq"] {
+    padding: 10px 15px;
+    margin: 5px 0;
+}
