@@ -1,9 +1,12 @@
 *.zip
 *.log
 *.sql
+*.sql.gz
+*.tar.gz
 logs/
 sites/*/logs/
 sites/*/site_config.json
+sites/*/private/
 apps/
 env/
 wget-log
