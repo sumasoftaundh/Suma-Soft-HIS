@@ -1,6 +1,6 @@
 <div align="center">
 <a href="https://sumasoft.com">
-    <img src="https://raw.githubusercontent.com/frappe/healthcare/develop/healthcare/public/images/healthcare.svg" height="128" alt="Suma Health Logo">
+    <img src="" height="128" alt="Suma Health Logo">
   </a>
   <h2>Suma Health</h2>
   <p align="center">
